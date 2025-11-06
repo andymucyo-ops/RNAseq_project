@@ -11,7 +11,7 @@
 #set paths
 CONTAINER="/containers/apptainer/fastqc-0.12.1.sif" 
 INPUT_DIR="/data/users/ankunzimana/RNAseq_project/data/reads_Blood"
-OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/fastqc"
+OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/QC_data"
 
 # Run FastQC using Apptainer container
 apptainer exec ${CONTAINER} fastqc \
