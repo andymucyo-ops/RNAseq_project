@@ -27,6 +27,3 @@ For reference genome:
 For associated annotaions:
 
     wget ftp://ftp.ensembl.org/pub/release-115/gtf/mus_musculus/Mus_musculus.GRCm39.115.gtf.gz
-
-
-
