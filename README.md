@@ -1,7 +1,8 @@
 # RNAseq FS 2025
 
 The data used for this project were retireved from the following repository 
-/data/courses/rnaseq_course/toxoplasma_de/reads_Blood
+
+    /data/courses/rnaseq_course/toxoplasma_de/reads_Blood
 
 1) Quality Check of the data
 
