@@ -5,12 +5,14 @@ The data used for this project were retireved from the following repository
 
 1) Quality Check of the data
 
-A frist script has been run to run the fastqc tool on all data 
-    --> ./scripts/run_fastqc.slurm
+A frist script has been run to run the fastqc tool on all data
+
+    ./scripts/run_fastqc.slurm
 
 Then a second scirpt using multiqc for applied on the fastqc output for better visualisation of all 
 reads 
-    --> ./scripts/run_multiqc.slurm
+    
+    ./scripts/run_multiqc.slurm
 
 2) MAP reads to the reference genome
 
