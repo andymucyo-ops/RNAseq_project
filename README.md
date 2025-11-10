@@ -8,11 +8,11 @@ The data used for this project were retireved from the following repository
 
 A frist script has been run to run the fastqc tool on all raw data
 
-    ./scripts/run_fastqc.slurm
+    sbatch ./scripts/run_fastqc.slurm
 
 Then a second scirpt using multiqc for applied on the fastqc output for better visualisation of the quality check of all reads 
     
-    ./scripts/run_multiqc.slurm
+    sbatch ./scripts/run_multiqc.slurm
 
 2) MAP reads to the reference genome
 
@@ -30,4 +30,5 @@ For associated annotaions:
 The reference genome is then unziped with `bash gzip -d ./data/reference_genome/Mus_musculus.GRCm39.dna_sm.primary_assembly.fa.gz` and the name is then changed to `bash mv ./data/reference_genome/Mus_musculus.GRCm39.dna_sm.primary_assembly.fa ./data/reference_genome/genome.fa`
 
 Then run the following script to produce the indexes for mapping:
+
     sbatch ./scripts/Hist2_index.slurm 
