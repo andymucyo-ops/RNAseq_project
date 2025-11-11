@@ -32,3 +32,9 @@ The reference genome is then unziped with `bash gzip -d ./data/reference_genome/
 Then run the following script to produce the indexes for mapping:
 
     sbatch ./scripts/Hist2_index.slurm 
+
+to obtain the sam file for the aligement run:
+
+    ./scripts/mapping.sh
+
+that will run the `bash mapping.slurm` script on every raw fastq data file 
