@@ -20,7 +20,7 @@ CONTAINER="/containers/apptainer/hisat2_samtools_408dfd02f175cd88.sif"
 # run hisat2-built
 
 apptainer exec ${CONTAINER} hisat2-build \
-    ${INPUT_DIR} \
+    -f ${INPUT_DIR} \
     ${OUTPUT_DIR} \
     -p $SLURM_CPUS_PER_TASK
 
