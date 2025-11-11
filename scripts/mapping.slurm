@@ -27,3 +27,5 @@ apptainer exec ${CONTAINER} hisat2 -p $SLURM_CPUS_PER_TASK\
     -S ${OUTPUT_DIR}/${SAMPLE_NAME}.sam \
     --summary-file ${OUT_DIR}/${SAMPLE_NAME}_summary.txt\
     --rna-strandness RF 
+
+echo'mapping completed!'
