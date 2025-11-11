@@ -24,7 +24,7 @@ apptainer exec ${CONTAINER} hisat2 -p $SLURM_CPUS_PER_TASK\
     -x ${INDEX_DIR} \
     -1 ${FILE_1} -2 ${FILE_2} \
     -S ${OUTPUT_DIR}/${SAMPLE_NAME}.sam \
-    --summary-file ${OUT_DIR}/${SAMPLE_NAME}_summary.txt\
+    --summary-file ${OUT_DIR}/summary/${SAMPLE_NAME}_summary.txt\
     --rna-strandness RF 
 
 echo 'mapping completed!'
