@@ -12,7 +12,7 @@
 
 #set paths
 CONTAINER="/containers/apptainer/hisat2_samtools_408dfd02f175cd88.sif"
-INDEX_DIR="/data/users/ankunzimana/RNAseq_project/results/hisat2_indexes/*"
+INDEX_BASENAME="/data/users/ankunzimana/RNAseq_project/results/hisat2_indexes/index"
 FILE_1=${1}
 FILE_2=${2}
 SAMPLE_NAME=${3}
@@ -21,7 +21,7 @@ OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/alignment/sam"
 # mapping script 
 
 apptainer exec ${CONTAINER} hisat2 -p $SLURM_CPUS_PER_TASK\
-    -x ${INDEX_DIR} \
+    -x ${INDEX_BASENAME} \
     -1 ${FILE_1} -2 ${FILE_2} \
     -S ${OUTPUT_DIR}/${SAMPLE_NAME}.sam \
     --summary-file ${OUT_DIR}/summary/${SAMPLE_NAME}_summary.txt\
