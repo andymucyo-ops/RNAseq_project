@@ -15,23 +15,22 @@
 
 SAM_FILE=${1}
 
-OUTPUT_FILE=${2}
+BAM_FILE=${2}
 
-# SAMPLE_NAME=${3}
+SORTED_BAM=${3}
 
-# SORTED_BAM=${4}
 
 
 container="/containers/apptainer/hisat2_samtools_408dfd02f175cd88.sif"
 
 #conversion from sam to bam
-apptainer exec ${container} samtools view -bo ${OUTPUT_FILE}.bam ${SAM_FILE} 
-
+apptainer exec ${container} samtools view -hbo ${BAM_FILE} ${SAM_FILE}
+echo "$(basename ${SAM_FILE}) converted to bam"
 
 # sort bam files directly from sam file
-apptainer exec ${container} samtools sort ${OUTPUT_FILE}.bam ${OUTPUT_FILE}.sorted.bam \
-    -m ${SLURM_MEM_PER_CPU} -@ ${SLURM_CPUS_PER_TASK}
+apptainer exec ${container} samtools sort -@ ${SLURM_CPUS_PER_TASK} -o ${SORTED_BAM} -T temp ${BAM_FILE} 
+echo "$(basename ${BAM_FILE}) has been sorted"
 
 # index sorted bam
-apptainer exec ${container} samtools index -@ ${SLURM_CPUS_PER_TASK} ${OUTPUT_FILE}.sorted.bam 
-
+apptainer exec ${container} samtools index ${SORTED_BAM} 
+echo "$(basename ${SORTED_BAM}) has been indexed"
