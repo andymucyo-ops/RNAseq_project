@@ -1,4 +1,4 @@
-#!/usr/env/bin bash
+#!/usr/bin/env bash
 
 #SBATCH --job-name=samtools_RNAseq
 #SBATCH --mem=32G
@@ -13,23 +13,25 @@
 
 #set paths
 
-sam_file= ${1}
+SAM_FILE=${1}
 
-bam_file= ${2}
+OUTPUT_FILE=${2}
 
-sorted_bam= ${3}
+# SAMPLE_NAME=${3}
 
-output_dir= "/data/users/ankunzimana/RNAseq_project/results/alignment/bam"
+# SORTED_BAM=${4}
+
 
 container="/containers/apptainer/hisat2_samtools_408dfd02f175cd88.sif"
 
 #conversion from sam to bam
-apptainer exec ${container} samtools view -hbS ${sam_file} > ${bam_file}
+apptainer exec ${container} samtools view -bo ${OUTPUT_FILE}.bam ${SAM_FILE} 
 
-# sort bam files 
-apptainer exec ${container} samtools sort ${bam_file} -o ${sorted_bam} \
+
+# sort bam files directly from sam file
+apptainer exec ${container} samtools sort ${OUTPUT_FILE}.bam ${OUTPUT_FILE}.sorted.bam \
     -m ${SLURM_MEM_PER_CPU} -@ ${SLURM_CPUS_PER_TASK}
 
 # index sorted bam
-apptainer exec ${container} smatools index ${sorted_bam}
+apptainer exec ${container} samtools index -@ ${SLURM_CPUS_PER_TASK} ${OUTPUT_FILE}.sorted.bam 
 
