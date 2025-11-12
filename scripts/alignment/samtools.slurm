@@ -19,7 +19,7 @@ bam_file= ${2}
 
 sorted_bam= ${3}
 
-output_dir= "/data/users/ankunzimana/RNAseq_project/results/alignement/bam"
+output_dir= "/data/users/ankunzimana/RNAseq_project/results/alignment/bam"
 
 container="/containers/apptainer/hisat2_samtools_408dfd02f175cd88.sif"
 

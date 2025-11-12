@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-input_dir="/data/users/ankunzimana/RNAseq_project/results/alignement"
+input_dir="/data/users/ankunzimana/RNAseq_project/results/alignment"
 
-script_dir="/data/users/ankunzimana/RNAseq_project/scripts"
+script_dir="/data/users/ankunzimana/RNAseq_project/scripts/alignment"
 
 for sam_file in `ls -1 ${input_dir}/sam/*.sam`; do
     bam_file= "${input_dir}/bam/$(basename ${sam_file%.sam}).bam"

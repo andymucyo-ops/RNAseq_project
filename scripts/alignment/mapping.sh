@@ -3,7 +3,7 @@
 # set paths
 
 INPUT_DIR="/data/users/ankunzimana/RNAseq_project/data/reads_Blood"
-SCRIPT_DIR="/data/users/ankunzimana/RNAseq_project/scripts"
+SCRIPT_DIR="/data/users/ankunzimana/RNAseq_project/scripts/alignment"
 
 #apply mapping.slurm script on all raw files 
 

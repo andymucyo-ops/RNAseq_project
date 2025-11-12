@@ -16,7 +16,7 @@ INDEX_BASENAME="/data/users/ankunzimana/RNAseq_project/results/hisat2_indexes/in
 FILE_1=${1}
 FILE_2=${2}
 SAMPLE_NAME=${3}
-OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/alignement/sam"
+OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/alignment/sam"
 
 # mapping script 
 
