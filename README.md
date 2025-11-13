@@ -4,17 +4,17 @@ The data used for this project were retireved from the following repository
 
     /data/courses/rnaseq_course/toxoplasma_de/reads_Blood
 
-1) Quality Check of the data
+1) ### Quality Check of the data
 
 A frist script has been run to run the fastqc tool on all raw data
 
-    sbatch ./scripts/run_fastqc.slurm
+    sbatch ./scripts/QC/run_fastqc.slurm
 
 Then a second scirpt using multiqc for applied on the fastqc output for better visualisation of the quality check of all reads 
     
-    sbatch ./scripts/run_multiqc.slurm
+    sbatch ./scripts/QC/run_multiqc.slurm
 
-2) MAP reads to the reference genome
+2) ### MAP reads to the reference genome
 
 The reference genome and associated annotations were downloaded form the following website: https://www.ensembl.org/info/data/ftp/index.html 
 Using the following commands: 
@@ -31,10 +31,19 @@ The reference genome is then unziped with `bash gzip -d ./data/reference_genome/
 
 Then run the following script to produce the indexes for mapping:
 
-    sbatch ./scripts/Hist2_index.slurm 
+    sbatch ./scripts/alignment/Hist2_index.slurm 
 
 to obtain the sam file for the aligement run:
 
-    ./scripts/mapping.sh
+    ./scripts/alignment/mapping.sh
 
-that will run the `bash mapping.slurm` script on every raw fastq data file 
+that will run the `bash mapping.slurm` script on every raw fastq data file
+
+Finally run 
+
+    ./scripts/alignment/samtools.sh
+
+that will run the `bash samtools.slurm` on the .sam files. This scripts consits of three actions 
+    1) conversion of .sam file, to .bam file (compresssed form containing the informations)
+    2) sorting the .bam files 
+    3) indexing the sorted .bam files
