@@ -4,7 +4,7 @@ The data used for this project were retireved from the following repository
 
     /data/courses/rnaseq_course/toxoplasma_de/reads_Blood
 
-1) ### Quality Check of the data
+### 1) Quality Check of the data
 
 A frist script has been run to run the fastqc tool on all raw data
 
@@ -14,7 +14,7 @@ Then a second scirpt using multiqc for applied on the fastqc output for better v
     
     sbatch ./scripts/QC/run_multiqc.slurm
 
-2) ### MAP reads to the reference genome
+### 2) MAP reads to the reference genome
 
 The reference genome and associated annotations were downloaded form the following website: https://www.ensembl.org/info/data/ftp/index.html 
 Using the following commands: 
@@ -47,3 +47,11 @@ that will run the `bash samtools.slurm` on the .sam files. This scripts consits 
     1) conversion of .sam file, to .bam file (compresssed form containing the informations)
     2) sorting the .bam files 
     3) indexing the sorted .bam files
+
+### 3) Read counting
+
+run the following script ont the sorted bam files:
+
+    sbatch scripts/count_reads/count_reads.slurm
+
+then apply this command `bash sed -E 's#[^[:space:]]*/(SRR[0-9]+)\.sorted\.bam#\1#g'` on the two created files (counts.txt and counts.txt. summary) 
