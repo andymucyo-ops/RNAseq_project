@@ -29,6 +29,7 @@
 *.tmp
 *.summary
 *.json
+*.Rproj
 results/
 # --- envs and dependencies ---
 .venv/
@@ -39,4 +40,5 @@ __pycache__/
 .Rproj.user/
 .Renviron
 .Rhistory
+
 
