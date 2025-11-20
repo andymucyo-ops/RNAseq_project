@@ -28,7 +28,7 @@
 *.pdf
 *.tmp
 *.summary
-results/multiQC/multiqc_data/multiqc_data.json
+*.json
 # --- envs and dependencies ---
 .venv/
 env/
