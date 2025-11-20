@@ -1,0 +1,758 @@
+{
+    "report_data_sources": {
+        "Bowtie 2 / HiSAT2": {
+            "all_sections": {
+                "SRR7821949": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821949_summary.txt",
+                "SRR7821950": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821950_summary.txt",
+                "SRR7821951": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821951_summary.txt",
+                "SRR7821952": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821952_summary.txt",
+                "SRR7821953": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821953_summary.txt",
+                "SRR7821954": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821954_summary.txt",
+                "SRR7821955": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821955_summary.txt",
+                "SRR7821956": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821956_summary.txt",
+                "SRR7821957": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821957_summary.txt",
+                "SRR7821968": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821968_summary.txt",
+                "SRR7821969": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821969_summary.txt",
+                "SRR7821970": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821970_summary.txt",
+                "SRR7821971": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821971_summary.txt",
+                "SRR7821972": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821972_summary.txt",
+                "SRR7821973": "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821973_summary.txt"
+            }
+        }
+    },
+    "report_general_stats_data": [
+        {
+            "SRR7821949": {
+                "total_reads": 29659690,
+                "paired_total": 29659690,
+                "paired_aligned_none": 2316950,
+                "paired_aligned_one": 25219754,
+                "paired_aligned_multi": 2122986,
+                "paired_aligned_discord_one": 281307,
+                "paired_aligned_mate_none": 2627092,
+                "paired_aligned_mate_one": 1162240,
+                "paired_aligned_mate_multi": 281954,
+                "overall_alignment_rate": 95.57,
+                "paired_aligned_mate_multi_halved": 140977.0,
+                "paired_aligned_mate_none_halved": 1313546.0,
+                "paired_aligned_mate_one_halved": 581120.0
+            },
+            "SRR7821950": {
+                "total_reads": 22228490,
+                "paired_total": 22228490,
+                "paired_aligned_none": 1658362,
+                "paired_aligned_one": 18988700,
+                "paired_aligned_multi": 1581428,
+                "paired_aligned_discord_one": 182048,
+                "paired_aligned_mate_none": 1799770,
+                "paired_aligned_mate_one": 932614,
+                "paired_aligned_mate_multi": 220244,
+                "overall_alignment_rate": 95.95,
+                "paired_aligned_mate_multi_halved": 110122.0,
+                "paired_aligned_mate_none_halved": 899885.0,
+                "paired_aligned_mate_one_halved": 466307.0
+            },
+            "SRR7821951": {
+                "total_reads": 32968214,
+                "paired_total": 32968214,
+                "paired_aligned_none": 2382935,
+                "paired_aligned_one": 28224795,
+                "paired_aligned_multi": 2360484,
+                "paired_aligned_discord_one": 283663,
+                "paired_aligned_mate_none": 2521979,
+                "paired_aligned_mate_one": 1352761,
+                "paired_aligned_mate_multi": 323804,
+                "overall_alignment_rate": 96.18,
+                "paired_aligned_mate_multi_halved": 161902.0,
+                "paired_aligned_mate_none_halved": 1260989.5,
+                "paired_aligned_mate_one_halved": 676380.5
+            },
+            "SRR7821952": {
+                "total_reads": 22952527,
+                "paired_total": 22952527,
+                "paired_aligned_none": 1525440,
+                "paired_aligned_one": 19770309,
+                "paired_aligned_multi": 1656778,
+                "paired_aligned_discord_one": 272849,
+                "paired_aligned_mate_none": 1374459,
+                "paired_aligned_mate_one": 910220,
+                "paired_aligned_mate_multi": 220503,
+                "overall_alignment_rate": 97.01,
+                "paired_aligned_mate_multi_halved": 110251.5,
+                "paired_aligned_mate_none_halved": 687229.5,
+                "paired_aligned_mate_one_halved": 455110.0
+            },
+            "SRR7821953": {
+                "total_reads": 21144888,
+                "paired_total": 21144888,
+                "paired_aligned_none": 1301058,
+                "paired_aligned_one": 18217169,
+                "paired_aligned_multi": 1626661,
+                "paired_aligned_discord_one": 160610,
+                "paired_aligned_mate_none": 1394515,
+                "paired_aligned_mate_one": 715695,
+                "paired_aligned_mate_multi": 170686,
+                "overall_alignment_rate": 96.7,
+                "paired_aligned_mate_multi_halved": 85343.0,
+                "paired_aligned_mate_none_halved": 697257.5,
+                "paired_aligned_mate_one_halved": 357847.5
+            },
+            "SRR7821954": {
+                "total_reads": 26417218,
+                "paired_total": 26417218,
+                "paired_aligned_none": 4239390,
+                "paired_aligned_one": 20069888,
+                "paired_aligned_multi": 2107940,
+                "paired_aligned_discord_one": 299671,
+                "paired_aligned_mate_none": 5448369,
+                "paired_aligned_mate_one": 1855887,
+                "paired_aligned_mate_multi": 575182,
+                "overall_alignment_rate": 89.69,
+                "paired_aligned_mate_multi_halved": 287591.0,
+                "paired_aligned_mate_none_halved": 2724184.5,
+                "paired_aligned_mate_one_halved": 927943.5
+            },
+            "SRR7821955": {
+                "total_reads": 34204315,
+                "paired_total": 34204315,
+                "paired_aligned_none": 5443913,
+                "paired_aligned_one": 26042386,
+                "paired_aligned_multi": 2718016,
+                "paired_aligned_discord_one": 415814,
+                "paired_aligned_mate_none": 6374882,
+                "paired_aligned_mate_one": 2772546,
+                "paired_aligned_mate_multi": 908770,
+                "overall_alignment_rate": 90.68,
+                "paired_aligned_mate_multi_halved": 454385.0,
+                "paired_aligned_mate_none_halved": 3187441.0,
+                "paired_aligned_mate_one_halved": 1386273.0
+            },
+            "SRR7821956": {
+                "total_reads": 31241345,
+                "paired_total": 31241345,
+                "paired_aligned_none": 7087338,
+                "paired_aligned_one": 21522797,
+                "paired_aligned_multi": 2631210,
+                "paired_aligned_discord_one": 361442,
+                "paired_aligned_mate_none": 10585775,
+                "paired_aligned_mate_one": 2215942,
+                "paired_aligned_mate_multi": 650075,
+                "overall_alignment_rate": 83.06,
+                "paired_aligned_mate_multi_halved": 325037.5,
+                "paired_aligned_mate_none_halved": 5292887.5,
+                "paired_aligned_mate_one_halved": 1107971.0
+            },
+            "SRR7821957": {
+                "total_reads": 27431070,
+                "paired_total": 27431070,
+                "paired_aligned_none": 4973509,
+                "paired_aligned_one": 20383074,
+                "paired_aligned_multi": 2074487,
+                "paired_aligned_discord_one": 309327,
+                "paired_aligned_mate_none": 6646498,
+                "paired_aligned_mate_one": 2077632,
+                "paired_aligned_mate_multi": 604234,
+                "overall_alignment_rate": 87.89,
+                "paired_aligned_mate_multi_halved": 302117.0,
+                "paired_aligned_mate_none_halved": 3323249.0,
+                "paired_aligned_mate_one_halved": 1038816.0
+            },
+            "SRR7821968": {
+                "total_reads": 30774869,
+                "paired_total": 30774869,
+                "paired_aligned_none": 3397246,
+                "paired_aligned_one": 23980201,
+                "paired_aligned_multi": 3397422,
+                "paired_aligned_discord_one": 256684,
+                "paired_aligned_mate_none": 4115761,
+                "paired_aligned_mate_one": 1674230,
+                "paired_aligned_mate_multi": 491133,
+                "overall_alignment_rate": 93.31,
+                "paired_aligned_mate_multi_halved": 245566.5,
+                "paired_aligned_mate_none_halved": 2057880.5,
+                "paired_aligned_mate_one_halved": 837115.0
+            },
+            "SRR7821969": {
+                "total_reads": 18844848,
+                "paired_total": 18844848,
+                "paired_aligned_none": 3374615,
+                "paired_aligned_one": 14047272,
+                "paired_aligned_multi": 1422961,
+                "paired_aligned_discord_one": 171057,
+                "paired_aligned_mate_none": 4559735,
+                "paired_aligned_mate_one": 1417786,
+                "paired_aligned_mate_multi": 429595,
+                "overall_alignment_rate": 87.9,
+                "paired_aligned_mate_multi_halved": 214797.5,
+                "paired_aligned_mate_none_halved": 2279867.5,
+                "paired_aligned_mate_one_halved": 708893.0
+            },
+            "SRR7821970": {
+                "total_reads": 25454472,
+                "paired_total": 25454472,
+                "paired_aligned_none": 3452201,
+                "paired_aligned_one": 19609782,
+                "paired_aligned_multi": 2392489,
+                "paired_aligned_discord_one": 245666,
+                "paired_aligned_mate_none": 4264884,
+                "paired_aligned_mate_one": 1655768,
+                "paired_aligned_mate_multi": 492418,
+                "overall_alignment_rate": 91.62,
+                "paired_aligned_mate_multi_halved": 246209.0,
+                "paired_aligned_mate_none_halved": 2132442.0,
+                "paired_aligned_mate_one_halved": 827884.0
+            },
+            "SRR7821971": {
+                "total_reads": 25319238,
+                "paired_total": 25319238,
+                "paired_aligned_none": 4001981,
+                "paired_aligned_one": 19161329,
+                "paired_aligned_multi": 2155928,
+                "paired_aligned_discord_one": 248857,
+                "paired_aligned_mate_none": 4973735,
+                "paired_aligned_mate_one": 1943140,
+                "paired_aligned_mate_multi": 589373,
+                "overall_alignment_rate": 90.18,
+                "paired_aligned_mate_multi_halved": 294686.5,
+                "paired_aligned_mate_none_halved": 2486867.5,
+                "paired_aligned_mate_one_halved": 971570.0
+            },
+            "SRR7821972": {
+                "total_reads": 23640351,
+                "paired_total": 23640351,
+                "paired_aligned_none": 2254973,
+                "paired_aligned_one": 19086093,
+                "paired_aligned_multi": 2299285,
+                "paired_aligned_discord_one": 177659,
+                "paired_aligned_mate_none": 2856763,
+                "paired_aligned_mate_one": 1018772,
+                "paired_aligned_mate_multi": 279093,
+                "overall_alignment_rate": 93.96,
+                "paired_aligned_mate_multi_halved": 139546.5,
+                "paired_aligned_mate_none_halved": 1428381.5,
+                "paired_aligned_mate_one_halved": 509386.0
+            },
+            "SRR7821973": {
+                "total_reads": 23531399,
+                "paired_total": 23531399,
+                "paired_aligned_none": 2307032,
+                "paired_aligned_one": 19316896,
+                "paired_aligned_multi": 1907471,
+                "paired_aligned_discord_one": 137937,
+                "paired_aligned_mate_none": 3011542,
+                "paired_aligned_mate_one": 1031363,
+                "paired_aligned_mate_multi": 295285,
+                "overall_alignment_rate": 93.6,
+                "paired_aligned_mate_multi_halved": 147642.5,
+                "paired_aligned_mate_none_halved": 1505771.0,
+                "paired_aligned_mate_one_halved": 515681.5
+            }
+        }
+    ],
+    "report_general_stats_headers": [
+        {
+            "overall_alignment_rate": {
+                "title": "% Aligned",
+                "description": "overall alignment rate",
+                "max": 100,
+                "min": 0,
+                "suffix": "%",
+                "scale": "YlGn",
+                "namespace": "Bowtie 2 / HiSAT2",
+                "rid": "mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "modify": null,
+                "placement": 1000.0,
+                "dmax": 100.0,
+                "dmin": 0.0
+            }
+        }
+    ],
+    "report_multiqc_command": "/usr/local/bin/multiqc /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821949_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821950_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821951_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821952_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821953_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821954_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821955_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821956_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821957_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821968_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821969_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821970_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821971_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821972_summary.txt /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821973_summary.txt -o /data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary",
+    "report_plot_data": {
+        "bowtie2_pe_plot": {
+            "plot_type": "bar_graph",
+            "samples": [
+                [
+                    "SRR7821949",
+                    "SRR7821950",
+                    "SRR7821951",
+                    "SRR7821952",
+                    "SRR7821953",
+                    "SRR7821954",
+                    "SRR7821955",
+                    "SRR7821956",
+                    "SRR7821957",
+                    "SRR7821968",
+                    "SRR7821969",
+                    "SRR7821970",
+                    "SRR7821971",
+                    "SRR7821972",
+                    "SRR7821973"
+                ]
+            ],
+            "datasets": [
+                [
+                    {
+                        "name": "PE mapped uniquely",
+                        "data": [
+                            25219754.0,
+                            18988700.0,
+                            28224795.0,
+                            19770309.0,
+                            18217169.0,
+                            20069888.0,
+                            26042386.0,
+                            21522797.0,
+                            20383074.0,
+                            23980201.0,
+                            14047272.0,
+                            19609782.0,
+                            19161329.0,
+                            19086093.0,
+                            19316896.0
+                        ],
+                        "color": "#20568f"
+                    },
+                    {
+                        "name": "PE mapped discordantly uniquely",
+                        "data": [
+                            281307.0,
+                            182048.0,
+                            283663.0,
+                            272849.0,
+                            160610.0,
+                            299671.0,
+                            415814.0,
+                            361442.0,
+                            309327.0,
+                            256684.0,
+                            171057.0,
+                            245666.0,
+                            248857.0,
+                            177659.0,
+                            137937.0
+                        ],
+                        "color": "#5c94ca"
+                    },
+                    {
+                        "name": "PE one mate mapped uniquely",
+                        "data": [
+                            581120.0,
+                            466307.0,
+                            676380.5,
+                            455110.0,
+                            357847.5,
+                            927943.5,
+                            1386273.0,
+                            1107971.0,
+                            1038816.0,
+                            837115.0,
+                            708893.0,
+                            827884.0,
+                            971570.0,
+                            509386.0,
+                            515681.5
+                        ],
+                        "color": "#95ceff"
+                    },
+                    {
+                        "name": "PE multimapped",
+                        "data": [
+                            2122986.0,
+                            1581428.0,
+                            2360484.0,
+                            1656778.0,
+                            1626661.0,
+                            2107940.0,
+                            2718016.0,
+                            2631210.0,
+                            2074487.0,
+                            3397422.0,
+                            1422961.0,
+                            2392489.0,
+                            2155928.0,
+                            2299285.0,
+                            1907471.0
+                        ],
+                        "color": "#f7a35c"
+                    },
+                    {
+                        "name": "PE one mate multimapped",
+                        "data": [
+                            140977.0,
+                            110122.0,
+                            161902.0,
+                            110251.5,
+                            85343.0,
+                            287591.0,
+                            454385.0,
+                            325037.5,
+                            302117.0,
+                            245566.5,
+                            214797.5,
+                            246209.0,
+                            294686.5,
+                            139546.5,
+                            147642.5
+                        ],
+                        "color": "#ffeb75"
+                    },
+                    {
+                        "name": "PE neither mate aligned",
+                        "data": [
+                            1313546.0,
+                            899885.0,
+                            1260989.5,
+                            687229.5,
+                            697257.5,
+                            2724184.5,
+                            3187441.0,
+                            5292887.5,
+                            3323249.0,
+                            2057880.5,
+                            2279867.5,
+                            2132442.0,
+                            2486867.5,
+                            1428381.5,
+                            1505771.0
+                        ],
+                        "color": "#981919"
+                    }
+                ]
+            ],
+            "config": {
+                "ylab": "# Reads",
+                "cpswitch_counts_label": "Number of Reads",
+                "id": "bowtie2_pe_plot",
+                "title": "Bowtie 2: PE Alignment Scores"
+            }
+        }
+    },
+    "report_saved_raw_data": {
+        "multiqc_bowtie2": {
+            "SRR7821949": {
+                "total_reads": 29659690,
+                "paired_total": 29659690,
+                "paired_aligned_none": 2316950,
+                "paired_aligned_one": 25219754,
+                "paired_aligned_multi": 2122986,
+                "paired_aligned_discord_one": 281307,
+                "paired_aligned_mate_none": 2627092,
+                "paired_aligned_mate_one": 1162240,
+                "paired_aligned_mate_multi": 281954,
+                "overall_alignment_rate": 95.57,
+                "paired_aligned_mate_multi_halved": 140977.0,
+                "paired_aligned_mate_none_halved": 1313546.0,
+                "paired_aligned_mate_one_halved": 581120.0
+            },
+            "SRR7821950": {
+                "total_reads": 22228490,
+                "paired_total": 22228490,
+                "paired_aligned_none": 1658362,
+                "paired_aligned_one": 18988700,
+                "paired_aligned_multi": 1581428,
+                "paired_aligned_discord_one": 182048,
+                "paired_aligned_mate_none": 1799770,
+                "paired_aligned_mate_one": 932614,
+                "paired_aligned_mate_multi": 220244,
+                "overall_alignment_rate": 95.95,
+                "paired_aligned_mate_multi_halved": 110122.0,
+                "paired_aligned_mate_none_halved": 899885.0,
+                "paired_aligned_mate_one_halved": 466307.0
+            },
+            "SRR7821951": {
+                "total_reads": 32968214,
+                "paired_total": 32968214,
+                "paired_aligned_none": 2382935,
+                "paired_aligned_one": 28224795,
+                "paired_aligned_multi": 2360484,
+                "paired_aligned_discord_one": 283663,
+                "paired_aligned_mate_none": 2521979,
+                "paired_aligned_mate_one": 1352761,
+                "paired_aligned_mate_multi": 323804,
+                "overall_alignment_rate": 96.18,
+                "paired_aligned_mate_multi_halved": 161902.0,
+                "paired_aligned_mate_none_halved": 1260989.5,
+                "paired_aligned_mate_one_halved": 676380.5
+            },
+            "SRR7821952": {
+                "total_reads": 22952527,
+                "paired_total": 22952527,
+                "paired_aligned_none": 1525440,
+                "paired_aligned_one": 19770309,
+                "paired_aligned_multi": 1656778,
+                "paired_aligned_discord_one": 272849,
+                "paired_aligned_mate_none": 1374459,
+                "paired_aligned_mate_one": 910220,
+                "paired_aligned_mate_multi": 220503,
+                "overall_alignment_rate": 97.01,
+                "paired_aligned_mate_multi_halved": 110251.5,
+                "paired_aligned_mate_none_halved": 687229.5,
+                "paired_aligned_mate_one_halved": 455110.0
+            },
+            "SRR7821953": {
+                "total_reads": 21144888,
+                "paired_total": 21144888,
+                "paired_aligned_none": 1301058,
+                "paired_aligned_one": 18217169,
+                "paired_aligned_multi": 1626661,
+                "paired_aligned_discord_one": 160610,
+                "paired_aligned_mate_none": 1394515,
+                "paired_aligned_mate_one": 715695,
+                "paired_aligned_mate_multi": 170686,
+                "overall_alignment_rate": 96.7,
+                "paired_aligned_mate_multi_halved": 85343.0,
+                "paired_aligned_mate_none_halved": 697257.5,
+                "paired_aligned_mate_one_halved": 357847.5
+            },
+            "SRR7821954": {
+                "total_reads": 26417218,
+                "paired_total": 26417218,
+                "paired_aligned_none": 4239390,
+                "paired_aligned_one": 20069888,
+                "paired_aligned_multi": 2107940,
+                "paired_aligned_discord_one": 299671,
+                "paired_aligned_mate_none": 5448369,
+                "paired_aligned_mate_one": 1855887,
+                "paired_aligned_mate_multi": 575182,
+                "overall_alignment_rate": 89.69,
+                "paired_aligned_mate_multi_halved": 287591.0,
+                "paired_aligned_mate_none_halved": 2724184.5,
+                "paired_aligned_mate_one_halved": 927943.5
+            },
+            "SRR7821955": {
+                "total_reads": 34204315,
+                "paired_total": 34204315,
+                "paired_aligned_none": 5443913,
+                "paired_aligned_one": 26042386,
+                "paired_aligned_multi": 2718016,
+                "paired_aligned_discord_one": 415814,
+                "paired_aligned_mate_none": 6374882,
+                "paired_aligned_mate_one": 2772546,
+                "paired_aligned_mate_multi": 908770,
+                "overall_alignment_rate": 90.68,
+                "paired_aligned_mate_multi_halved": 454385.0,
+                "paired_aligned_mate_none_halved": 3187441.0,
+                "paired_aligned_mate_one_halved": 1386273.0
+            },
+            "SRR7821956": {
+                "total_reads": 31241345,
+                "paired_total": 31241345,
+                "paired_aligned_none": 7087338,
+                "paired_aligned_one": 21522797,
+                "paired_aligned_multi": 2631210,
+                "paired_aligned_discord_one": 361442,
+                "paired_aligned_mate_none": 10585775,
+                "paired_aligned_mate_one": 2215942,
+                "paired_aligned_mate_multi": 650075,
+                "overall_alignment_rate": 83.06,
+                "paired_aligned_mate_multi_halved": 325037.5,
+                "paired_aligned_mate_none_halved": 5292887.5,
+                "paired_aligned_mate_one_halved": 1107971.0
+            },
+            "SRR7821957": {
+                "total_reads": 27431070,
+                "paired_total": 27431070,
+                "paired_aligned_none": 4973509,
+                "paired_aligned_one": 20383074,
+                "paired_aligned_multi": 2074487,
+                "paired_aligned_discord_one": 309327,
+                "paired_aligned_mate_none": 6646498,
+                "paired_aligned_mate_one": 2077632,
+                "paired_aligned_mate_multi": 604234,
+                "overall_alignment_rate": 87.89,
+                "paired_aligned_mate_multi_halved": 302117.0,
+                "paired_aligned_mate_none_halved": 3323249.0,
+                "paired_aligned_mate_one_halved": 1038816.0
+            },
+            "SRR7821968": {
+                "total_reads": 30774869,
+                "paired_total": 30774869,
+                "paired_aligned_none": 3397246,
+                "paired_aligned_one": 23980201,
+                "paired_aligned_multi": 3397422,
+                "paired_aligned_discord_one": 256684,
+                "paired_aligned_mate_none": 4115761,
+                "paired_aligned_mate_one": 1674230,
+                "paired_aligned_mate_multi": 491133,
+                "overall_alignment_rate": 93.31,
+                "paired_aligned_mate_multi_halved": 245566.5,
+                "paired_aligned_mate_none_halved": 2057880.5,
+                "paired_aligned_mate_one_halved": 837115.0
+            },
+            "SRR7821969": {
+                "total_reads": 18844848,
+                "paired_total": 18844848,
+                "paired_aligned_none": 3374615,
+                "paired_aligned_one": 14047272,
+                "paired_aligned_multi": 1422961,
+                "paired_aligned_discord_one": 171057,
+                "paired_aligned_mate_none": 4559735,
+                "paired_aligned_mate_one": 1417786,
+                "paired_aligned_mate_multi": 429595,
+                "overall_alignment_rate": 87.9,
+                "paired_aligned_mate_multi_halved": 214797.5,
+                "paired_aligned_mate_none_halved": 2279867.5,
+                "paired_aligned_mate_one_halved": 708893.0
+            },
+            "SRR7821970": {
+                "total_reads": 25454472,
+                "paired_total": 25454472,
+                "paired_aligned_none": 3452201,
+                "paired_aligned_one": 19609782,
+                "paired_aligned_multi": 2392489,
+                "paired_aligned_discord_one": 245666,
+                "paired_aligned_mate_none": 4264884,
+                "paired_aligned_mate_one": 1655768,
+                "paired_aligned_mate_multi": 492418,
+                "overall_alignment_rate": 91.62,
+                "paired_aligned_mate_multi_halved": 246209.0,
+                "paired_aligned_mate_none_halved": 2132442.0,
+                "paired_aligned_mate_one_halved": 827884.0
+            },
+            "SRR7821971": {
+                "total_reads": 25319238,
+                "paired_total": 25319238,
+                "paired_aligned_none": 4001981,
+                "paired_aligned_one": 19161329,
+                "paired_aligned_multi": 2155928,
+                "paired_aligned_discord_one": 248857,
+                "paired_aligned_mate_none": 4973735,
+                "paired_aligned_mate_one": 1943140,
+                "paired_aligned_mate_multi": 589373,
+                "overall_alignment_rate": 90.18,
+                "paired_aligned_mate_multi_halved": 294686.5,
+                "paired_aligned_mate_none_halved": 2486867.5,
+                "paired_aligned_mate_one_halved": 971570.0
+            },
+            "SRR7821972": {
+                "total_reads": 23640351,
+                "paired_total": 23640351,
+                "paired_aligned_none": 2254973,
+                "paired_aligned_one": 19086093,
+                "paired_aligned_multi": 2299285,
+                "paired_aligned_discord_one": 177659,
+                "paired_aligned_mate_none": 2856763,
+                "paired_aligned_mate_one": 1018772,
+                "paired_aligned_mate_multi": 279093,
+                "overall_alignment_rate": 93.96,
+                "paired_aligned_mate_multi_halved": 139546.5,
+                "paired_aligned_mate_none_halved": 1428381.5,
+                "paired_aligned_mate_one_halved": 509386.0
+            },
+            "SRR7821973": {
+                "total_reads": 23531399,
+                "paired_total": 23531399,
+                "paired_aligned_none": 2307032,
+                "paired_aligned_one": 19316896,
+                "paired_aligned_multi": 1907471,
+                "paired_aligned_discord_one": 137937,
+                "paired_aligned_mate_none": 3011542,
+                "paired_aligned_mate_one": 1031363,
+                "paired_aligned_mate_multi": 295285,
+                "overall_alignment_rate": 93.6,
+                "paired_aligned_mate_multi_halved": 147642.5,
+                "paired_aligned_mate_none_halved": 1505771.0,
+                "paired_aligned_mate_one_halved": 515681.5
+            }
+        },
+        "multiqc_general_stats": {
+            "SRR7821949": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 95.57
+            },
+            "SRR7821950": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 95.95
+            },
+            "SRR7821951": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 96.18
+            },
+            "SRR7821952": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 97.01
+            },
+            "SRR7821953": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 96.7
+            },
+            "SRR7821954": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 89.69
+            },
+            "SRR7821955": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 90.68
+            },
+            "SRR7821956": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 83.06
+            },
+            "SRR7821957": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 87.89
+            },
+            "SRR7821968": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 93.31
+            },
+            "SRR7821969": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 87.9
+            },
+            "SRR7821970": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 91.62
+            },
+            "SRR7821971": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 90.18
+            },
+            "SRR7821972": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 93.96
+            },
+            "SRR7821973": {
+                "Bowtie 2 / HiSAT2_mqc-generalstats-bowtie_2_hisat2-overall_alignment_rate": 93.6
+            }
+        }
+    },
+    "config_analysis_dir_abs": [
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821949_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821950_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821951_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821952_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821953_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821954_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821955_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821956_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821957_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821968_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821969_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821970_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821971_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821972_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821973_summary.txt"
+    ],
+    "config_analysis_dir": [
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821949_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821950_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821951_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821952_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821953_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821954_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821955_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821956_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821957_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821968_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821969_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821970_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821971_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821972_summary.txt",
+        "/data/users/ankunzimana/RNAseq_project/results/alignment/sam/summary/SRR7821973_summary.txt"
+    ],
+    "config_creation_date": "2025-11-20, 10:46 CET",
+    "config_git_hash": null,
+    "config_intro_text": null,
+    "config_report_comment": null,
+    "config_report_header_info": null,
+    "config_script_path": "/usr/local/lib/python3.11/site-packages/multiqc/utils",
+    "config_short_version": "1.19",
+    "config_subtitle": null,
+    "config_title": null,
+    "config_version": "1.19"
+}
