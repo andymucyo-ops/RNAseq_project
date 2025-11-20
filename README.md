@@ -54,4 +54,4 @@ run the following script ont the sorted bam files:
 
     sbatch scripts/count_reads/count_reads.slurm
 
-then apply this command `bash sed -E 's#[^[:space:]]*/(SRR[0-9]+)\.sorted\.bam#\1#g'` on the two created files (counts.txt and counts.txt. summary)  and output both of them to corrected_counts.txt and corrected_counts.txt.summary
+
