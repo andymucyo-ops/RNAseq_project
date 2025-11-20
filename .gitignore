@@ -29,6 +29,7 @@
 *.tmp
 *.summary
 *.json
+results/
 # --- envs and dependencies ---
 .venv/
 env/
