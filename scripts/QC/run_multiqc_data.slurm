@@ -12,8 +12,8 @@
 
 #define the pathways 
 CONTAINER="/containers/apptainer/multiqc-1.19.sif"
-INPUT_DIR="/data/users/ankunzimana/RNAseq_project"
-OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/multiQC" 
+INPUT_DIR="data/users/ankunzimana/RNAseq_project/results/QC_data"
+OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/QC_data" 
 
 # run scirpt
 apptainer exec ${CONTAINER} multiqc \
