@@ -26,5 +26,7 @@ apptainer exec ${container} featureCounts -p --countReadPairs\
     -T $SLURM_CPUS_PER_TASK \
     -s 2
 
+sed -E -i 's#[^[:space:]]*/(SRR[0-9]+)\.sorted\.bam#\1#g'
+
 
 
