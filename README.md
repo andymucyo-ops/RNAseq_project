@@ -56,15 +56,11 @@ run the following script ont the sorted bam files:
     
 ## 4) Exploratory analysis
 
-### Step 1) reformat the data as expected by DESeq2
+### Step 1) reformat the data as expected by DESeq2 befor importing to R
   
   apply the following command on the featurecount output file to create a new file, without the first line and the unwanted column
 
-    tail -n +2 corrected_count.txt | cut -f 7-21 > count.txt
-
-  and same for the README in the reads_blood directory, to create a new file containing the sample information
-
-    tail -n +10 README > sample_info.txt
+    tail -n +2 corrected_count.txt | cut -f 1,7-21 > count.txt
 
 
 ### Step 2) Differential expression analysis 

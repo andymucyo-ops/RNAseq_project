@@ -4,6 +4,11 @@ sample_counts_path <- "/Users/mucyo/Desktop/Master_bioinfo/Cours/RNA_seq/RNAseq_
 # save the feature count file as a table
 countData <- read.table(sample_counts_path, header = TRUE)
 
+# format the data input to match expected DESeq format
+rownames(countData) <- countData$Geneid
+
+countData <- countData[, -c(1)]
+
 # create a colData dataframe containing the data informations according to README in reads_Blood
 colData <- data.frame(
   Sample = c("SRR7821949", "SRR7821950", "SRR7821951", "SRR7821952", "SRR7821953",
@@ -15,6 +20,8 @@ colData <- data.frame(
                 rep("Case", 4), rep("Control", 3)),
   row.names = NULL
 )
+
+colData$Genotype <- factor(colData$Genotype, levels = c("WT", "DKO"))
 
 # create DESeq2 dataset from the feature counts data and the sample information 
 dds <- DESeqDataSetFromMatrix(
