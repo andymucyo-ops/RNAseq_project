@@ -4,7 +4,7 @@ The data used for this project were retireved from the following repository
 
     /data/courses/rnaseq_course/toxoplasma_de/reads_Blood
 
-### 1) Quality Check of the data
+## 1) Quality Check of the data
 
 A frist script has been run to run the fastqc tool on all raw data
 
@@ -14,7 +14,7 @@ Then a second scirpt using multiqc for applied on the fastqc output for better v
     
     sbatch ./scripts/QC/run_multiqc.slurm
 
-### 2) MAP reads to the reference genome
+## 2) MAP reads to the reference genome
 
 The reference genome and associated annotations were downloaded form the following website: https://www.ensembl.org/info/data/ftp/index.html 
 Using the following commands: 
@@ -48,10 +48,32 @@ that will run the `bash samtools.slurm` on the .sam files. This scripts consits 
     2) sorting the .bam files 
     3) indexing the sorted .bam files
 
-### 3) Read counting
+## 3) Read counting
 
 run the following script ont the sorted bam files:
 
     sbatch scripts/count_reads/count_reads.slurm
+    
+## 4) Exploratory analysis
+
+### Step 1) reformat the data as expected by DESeq2
+  
+  apply the following command on the featurecount output file to create a new file, without the first line and the unwanted column
+
+    tail -n +2 corrected_count.txt | cut -f 7-21 > count.txt
+
+  and same for the README in the reads_blood directory, to create a new file containing the sample information
+
+    tail -n +10 README > sample_info.txt
+
+
+### Step 2) Differential expression analysis 
+  
+  run the following script
+    
+    DES_data_analysis.R 
+
+
+
 
 
