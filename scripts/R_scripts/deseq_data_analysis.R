@@ -1,4 +1,3 @@
-library(DESeq2)
 
 #-------------------------------------------------------------------------------
 # data formating before analysis
@@ -37,7 +36,10 @@ sorted_colData <- colData[order(colData$Sample),]
 # start Differential gene expression analysis
 #-------------------------------------------------------------------------------
 
-# create DESeq2 dataset from the feature counts data and the sample information 
+#import DESeq2 package
+library(DESeq2)
+
+# create DESeq data set from the feature counts data and the sample information 
 dds <- DESeqDataSetFromMatrix(
   countData,
   sorted_colData,
@@ -62,8 +64,7 @@ vsd <- vst(dds, blind=FALSE)
 
 plotPCA(vsd, intgroup = c("Genotype","Condition"))
 
-# result output 
-
+# result output formatting
 dds$Group <- factor(paste0(dds$Genotype, dds$Condition))
 
 design(dds) <- ~ Group
