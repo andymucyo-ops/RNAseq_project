@@ -70,16 +70,19 @@ design(dds) <- ~ Group
 
 resultsNames(dds)
 
+# get results case vs control for WT and DKO
 res_WT <- results(dds, name = "Condition_Case_vs_Control")
-
-res_WT_df <- as.data.frame(res_WT)
-
-res_WT_df <- res_WT_df[!is.na(res_WT_df$padj),]
 
 res_DKO <- results(dds,
                    list( c("Condition_Case_vs_Control","GenotypeDKO.ConditionCase") )
-                   )
+                  )
+
+# transform into data frame 
+res_WT_df <- as.data.frame(res_WT)
 
 res_DKO_df <- as.data.frame(res_DKO)
+
+#remove NA values from data frame 
+res_WT_df <- res_WT_df[!is.na(res_WT_df$padj),]
 
 res_DKO_df <- res_DKO_df[!is.na(res_DKO_df$padj),]
