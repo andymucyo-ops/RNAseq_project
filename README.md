@@ -54,7 +54,7 @@ run the following script ont the sorted bam files:
 
     sbatch scripts/count_reads/count_reads.slurm
     
-## 4) Exploratory analysis
+## 4) Differential expression analysis 
 
 ### Step 1) reformat the data as expected by DESeq2 befor importing to R
   
