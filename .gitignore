@@ -30,7 +30,7 @@
 *.summary
 *.json
 *.Rproj
-results/
+./results/
 # --- envs and dependencies ---
 .venv/
 env/
