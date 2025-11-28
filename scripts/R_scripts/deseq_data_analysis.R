@@ -1,3 +1,7 @@
+#load libraries 
+library(DESeq2)
+library(ggplot2)
+library(pheatmap)
 
 #-------------------------------------------------------------------------------
 # data formating before analysis
@@ -35,9 +39,6 @@ sorted_colData <- colData[order(colData$Sample),]
 #-------------------------------------------------------------------------------
 # start Differential gene expression analysis
 #-------------------------------------------------------------------------------
-
-#import DESeq2 package
-library(DESeq2)
 
 # create DESeq data set from the feature counts data and the sample information 
 dds <- DESeqDataSetFromMatrix(
