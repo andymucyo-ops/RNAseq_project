@@ -13,8 +13,6 @@
 *.tgz
 *.ht2
 *.sa
-
-
 # --- resuls, output and logs ---
 *.txt
 *.csv
@@ -40,5 +38,4 @@ __pycache__/
 .Rproj.user/
 .Renviron
 .Rhistory
-
-
+.gitignore.save
