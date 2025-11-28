@@ -1,0 +1,44 @@
+# --- Raw data and big files ---
+*.fastq
+*.fq
+*.bam
+*.sam
+*.bai
+*.fa
+*.fasta
+*.gz
+*.gtf
+*.zip
+*.tar
+*.tgz
+*.ht2
+*.sa
+
+
+# --- resuls, output and logs ---
+*.txt
+*.csv
+*.tsv
+*.log
+*.out
+*.err
+*.RData
+*.rds
+*.html
+*.pdf
+*.tmp
+*.summary
+*.json
+*.Rproj
+./results/
+# --- envs and dependencies ---
+.venv/
+env/
+__pycache__/
+*.pyc
+.DS_Store
+.Rproj.user/
+.Renviron
+.Rhistory
+
+
