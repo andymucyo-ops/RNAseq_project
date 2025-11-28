@@ -63,7 +63,7 @@ run the following script ont the sorted bam files:
     tail -n +2 corrected_count.txt | cut -f 1,7-21 > count.txt
 
 
-### Step 2) Differential expression analysis 
+### Step 2) Differential expression analysis & Data visualization
   
   run the following script
     
