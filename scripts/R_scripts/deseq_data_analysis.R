@@ -85,7 +85,7 @@ design(dds) <- ~ Group
 
 resultsNames(dds)
 
-# get results case vs control for WT and DKO
+# get results comparation of case vs control form both genotype (WT and DKO)
 res_WT <- results(dds, name = "Condition_Case_vs_Control")
 
 res_DKO <- results(dds,
