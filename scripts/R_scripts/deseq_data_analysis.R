@@ -1,7 +1,20 @@
+#intall requiered packages for analysis 
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install(version = "3.22")
+BiocManager::install("DESeq2")
+devtools::install_github("kevinblighe/EnhancedVolcano")
+# use github version of enhance volcano if not able to install using BiocManager
+# otherwise enter BiocManager::install("EnhancedVolcano")
+
+
 #load libraries 
-library(DESeq2)
-library(ggplot2)
-library(pheatmap)
+library("DESeq2")
+library("pheatmap")
+library("ggrepel")
+library("ggplot2")
+library("EnhancedVolcano")
 
 #-------------------------------------------------------------------------------
 # data formating before analysis
