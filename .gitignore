@@ -29,6 +29,7 @@
 *.json
 *.Rproj
 results/
+figure/
 # --- envs and dependencies ---
 .venv/
 env/
