@@ -65,9 +65,9 @@ run the following script ont the sorted bam files:
 
 ### Step 2) Differential expression analysis & Data visualization
   
-  run the following script
+  The whole data treatment and analysis have been displayed in the following script 
     
-    DES_data_analysis.R 
+    DES_data_analysis.Rmd 
 
 
 
