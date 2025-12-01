@@ -1,0 +1,152 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+install all requiered packages for analysis
+
+note: use github version of enhance volcano if not able to install using
+BiocManager otherwise can be installed using:
+`BiocManager::install("EnhancedVolcano")`
+
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("DESeq2")
+devtools::install_github("kevinblighe/EnhancedVolcano")
+
+#load libraries 
+library("DESeq2")
+library("pheatmap")
+library("ggrepel")
+library("ggplot2")
+library("EnhancedVolcano")
+```
+
+# 1) Data formatting before analysis
+
+set file path
+
+```{r}
+sample_counts_path <- "~/R-projects/RNAseq_project/data/count.txt"
+```
+
+save the feature count file as a table
+
+```{r}
+countData <- read.table(sample_counts_path, header = TRUE)
+head(countData)
+```
+
+changing the count into gene id
+
+```{r}
+rownames(countData) <- countData$Geneid 
+countData <- countData[, -c(1)] #remove the gene id column
+head(countData)
+```
+
+Create a colData data frame containing the data information according to
+README in reads_Blood, acting as the metadata of the counts
+
+```{r}
+colData <- data.frame( Sample = c("SRR7821949", "SRR7821950",
+"SRR7821951", "SRR7821952", "SRR7821953", "SRR7821968", "SRR7821969",
+"SRR7821970", "SRR7821954", "SRR7821955", "SRR7821956", "SRR7821957",
+"SRR7821971", "SRR7821972", "SRR7821973"), Genotype = c(rep("WT", 8),
+rep("DKO", 7)), Condition = c(rep("Case", 5), rep("Control", 3),
+rep("Case", 4), rep("Control", 3)), row.names = NULL )
+
+head(colData, n=10L)
+```
+
+converting sample into factor to match DESeq2 input format, and order by
+the sample names to match column names of the count data table
+
+```{r}
+colData$Sample <- factor(colData$Sample, levels =
+sort(unique(colData$Sample)))
+
+# saving the sorted meta data as a new data frame
+sorted_colData <- colData[order(colData$Sample),]
+
+#setting sample names as rownames
+rownames(sorted_colData) <- sorted_colData$Sample
+
+#remonving sample names column
+sorted_colData <-sorted_colData[,-c(1)]
+
+#transform the meta data values into factor, to match DESeq expected data types, and set references for downstream data analysis 
+sorted_colData$Genotype <- relevel(dds$Genotype, ref = "WT")
+
+sorted_colData$Condition <- relevel(dds$Condition, ref = "Control")
+
+head(sorted_colData, n=10L)
+
+#final check before launching DESeq
+all(rownames(sorted_colData) == colnames(countData))
+```
+
+# 2) start Differential gene expression analysis
+
+create DESeq data set from the feature counts data and the counts meta
+data
+
+```{r}
+dds <- DESeqDataSetFromMatrix( countData, sorted_colData, design = ~
+Genotype + Condition + Genotype:Condition )
+```
+
+then run differential expression analysis
+
+```{r}
+dds <- DESeq(dds)
+```
+
+# 3) Results and data visualization
+
+extraction of transformed values, and principal component plot of the
+samples
+
+```{r}
+vsd <- vst(dds, blind=FALSE)
+
+plotPCA(vsd, intgroup = c("Genotype","Condition"))
+```
+
+get results coefficient to highlight in the following result step
+
+```{r}
+resultsNames(dds)
+```
+
+get results comparation of case vs control form both genotype (WT and
+DKO)
+
+```{r}
+res_WT <- results(dds, name = "Condition_Case_vs_Control", alpha = 0.05)
+
+res_DKO <- results(dds, list(
+c("Condition_Case_vs_Control","GenotypeDKO.ConditionCase") ), alpha = 0.05 )
+
+summary_WT <- summary(res_WT)
+  
+summary_DKO <- summary(res_DKO)
+```
+
+transform into data frame, and remove NA values
+
+```{r}
+#transform into dataframe
+res_WT_df <- as.data.frame(res_WT)
+
+res_DKO_df <- as.data.frame(res_DKO)
+
+
+#remove NA values from data frame 
+res_WT_df <- res_WT_df[!is.na(res_WT_df$padj),]
+
+res_DKO_df <- res_DKO_df[!is.na(res_DKO_df$padj),]
+```
