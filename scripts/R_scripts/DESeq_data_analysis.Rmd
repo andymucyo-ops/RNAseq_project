@@ -4,7 +4,7 @@ editor_options:
     wrap: 72
 ---
 
-install all requiered packages for analysis
+install all required packages for analysis
 
 note: use github version of enhance volcano if not able to install using
 BiocManager otherwise can be installed using:
