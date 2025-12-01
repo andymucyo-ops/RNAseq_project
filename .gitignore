@@ -30,6 +30,7 @@
 *.Rproj
 results/
 figure/
+DESeq_data_analysis.md 
 # --- envs and dependencies ---
 .venv/
 env/
