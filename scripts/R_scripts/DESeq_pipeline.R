@@ -1,16 +1,3 @@
-# install all required packages for analysis
-# 
-# note: use github version of enhance volcano if not able to install using
-# BiocManager otherwise can be installed using:
-# `BiocManager::install("EnhancedVolcano")`
-
-if (!require("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-
-BiocManager::install("DESeq2") #for differential expression analysis 
-BiocManager::install("clusterProfiler") #for identification of gene ontology
-devtools::install_github("kevinblighe/EnhancedVolcano") 
-
 #load libraries 
 library("DESeq2")
 library("clusterProfiler")
@@ -18,6 +5,7 @@ library("pheatmap")
 library("ggrepel")
 library("ggplot2")
 library("EnhancedVolcano")
+
 
 # ------------------------------------------------------------------------------
 # 1) Data formatting before analysis
