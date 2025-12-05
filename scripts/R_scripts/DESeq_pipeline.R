@@ -7,11 +7,13 @@
 if (!require("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
-BiocManager::install("DESeq2")
-devtools::install_github("kevinblighe/EnhancedVolcano")
+BiocManager::install("DESeq2") #for differential expression analysis 
+BiocManager::install("clusterProfiler") #for identification of gene ontology
+devtools::install_github("kevinblighe/EnhancedVolcano") 
 
 #load libraries 
 library("DESeq2")
+library("clusterProfiler")
 library("pheatmap")
 library("ggrepel")
 library("ggplot2")
@@ -77,50 +79,51 @@ dds$Genotype <- relevel(dds$Genotype, ref = "WT")
 
 dds$Condition <- relevel(dds$Condition, ref = "Control")
 
-# then run differential expression analysis
+# run differential expression analysis
 dds <- DESeq(dds)
 
 #------------------------------------------------------------------------------- 
 # 3) Results and data visualization
 #------------------------------------------------------------------------------- 
 # extraction of transformed values, and principal component plot of the samples
-vsd <- vst(dds, blind=FALSE)
+vsd <- vst(dds, blind=FALSE) # extracts the corrected counts for each entry of the differential expression matrix 
 
-plotPCA(vsd, intgroup = c("Genotype","Condition"))
+plotPCA(vsd, intgroup = c("Genotype","Condition")) # vizualisation plot of the clustering of the data
 
-# get results coefficient to highlight in the following result step
+# get results coefficient to use for highlight in the following result step
 resultsNames(dds)
 
-# get results comparison of case vs control
-res_Genotype <- results(dds, name = "Genotype_DKO_vs_WT", alpha = 0.05)
+# get results comparison with 3 different methods 
+res_Genotype <- results(dds, name = "Genotype_DKO_vs_WT", alpha = 0.05) 
+# highlights the effect of the Genotype (DKO vs WT) in control condition, enables observation of the genes affected by DKO, regadless of the condition
+# expected in heatmap: clear difference between 
 
 res_Condition <- results(dds, name = "Condition_Case_vs_Control", alpha = 0.05 )
+# highlights the response of the gene to the condition in WT (control vs case), and enables for comparison of the response in DKO 
 
 res_Interaction <- results(dds, name = "GenotypeDKO.ConditionCase", alpha = 0.05)
+# highlight the response of the genes to the condition in WT and DKO
+# enables for verification of the genes for which the response to the condition depends on the Genotype
 
-
+# get summary of the result data output for each comparison method
 summary_Genotype <- summary(res_Genotype)
-  
 summary_Condition <- summary(res_Condition)
-
 summary_Interaction <- summary(res_Interaction)
 
-# transform into data frame, and remove NA values
 
-#transform into dataframe
+#transform results data into data frame
 res_Genotype_df <- as.data.frame(res_Genotype)
-
 res_Condition_df <- as.data.frame(res_Condition)
-
 res_Interaction_df <- as.data.frame(res_Interaction)
+
 #remove NA values from data frame 
 res_Genotype_df <- res_Genotype_df[!is.na(res_Genotype_df$padj),]
-
 res_Condition_df <- res_Condition_df[!is.na(res_Condition_df$padj),]
-
 res_Interaction_df <- res_Interaction_df[!is.na(res_Interaction_df$padj),]
 
 # selection of the top 50 genes for each result data frame 
+# first we create a vector containing the to 50 differentialy expressed genes in each result table based on padj values 
+# then create a matrix containg each column of the transformed count matrix but only the rows of the most differentialy expressed genes
 top_genes_Genotype <- head(order(res_Genotype_df$padj), 50)
 mat_Genotype <- assay(vsd)[top_genes_Genotype, ]
 
@@ -128,15 +131,12 @@ top_genes_Condition <- head(order(res_Condition_df$padj), 50)
 mat_Condition <- assay(vsd)[top_genes_Condition, ]
 
 top_genes_Interaction <- head(order(res_Interaction_df$padj), 50)
-mat_Interaction <- assay(vsd)[top_genes_Interaction, ]
-# orders the data frame by ascending padj values, ordering them from the most to the least
-# differentially expressed
+mat_Interaction <- assay(vsd)[top_genes_Interaction, ] 
 
 
-# heatmap for both result data frame
-pheatmap(mat_Genotype, 
-         clustering_distance_rows = "euclidean", 
-         clustering_distance_cols = "euclidean", 
+# heatmap for different highlighted result data frame
+pheatmap(mat_Genotype,
+         main = "Genotype Effect (DKO vs WT in Control)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = TRUE, 
          fontsize = 10, 
@@ -144,9 +144,8 @@ pheatmap(mat_Genotype,
          filename = "./results/R_plots/heatmap_Genotype.png"
          )
 
-pheatmap(mat_Condition, 
-         clustering_distance_rows = "euclidean", 
-         clustering_distance_cols = "euclidean", 
+pheatmap(mat_Condition,
+         main = "Condition Effect (Case vs Control in WT)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = TRUE, 
          fontsize = 10, 
@@ -155,8 +154,7 @@ pheatmap(mat_Condition,
          )
 
 pheatmap(mat_Interaction, 
-         clustering_distance_rows = "euclidean", 
-         clustering_distance_cols = "euclidean", 
+         main = "Interaction Effect",
          annotation_col = as.data.frame(colData(dds)[,c("Genotype", "Condition")]), 
          show_rownames = TRUE, 
          fontsize = 10, 
@@ -171,7 +169,6 @@ png(filename = "./results/R_plots/volcano_plot_Genotype.png",
     width = 3000,
     height = 2400,
     res = 300)
-
 
 EnhancedVolcano(
   res_Genotype_df,
@@ -218,6 +215,6 @@ EnhancedVolcano(
 
 dev.off()
 
-## -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
-BiocManager::install("clusterProfiler")
+
