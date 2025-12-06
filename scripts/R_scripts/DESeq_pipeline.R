@@ -76,8 +76,17 @@ dds <- DESeq(dds)
 # extraction of transformed values, and principal component plot of the samples
 vsd <- vst(dds, blind=FALSE) # extracts the corrected counts for each entry of the differential expression matrix 
 
-plotPCA(vsd, intgroup = c("Genotype","Condition")) # vizualisation plot of the clustering of the data
+png(filename = "./results/R_plots/PCAplot.png",
+    width = 3000,
+    height = 2400,
+    res = 300)
 
+plotPCA(vsd,
+  intgroup = c("Genotype","Condition"),
+  ntop = 500,
+  ) # visualization plot of the clustering of the data
+
+dev.off()
 # get results coefficient to use for highlight in the following result step
 resultsNames(dds)
 
