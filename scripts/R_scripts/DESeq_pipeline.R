@@ -121,13 +121,13 @@ res_Interaction_df <- res_Interaction_df[!is.na(res_Interaction_df$padj),]
 # selection of the top 50 genes for each result data frame 
 # first we create a vector containing the to 50 differentialy expressed genes in each result table based on padj values 
 # then create a matrix containg each column of the transformed count matrix but only the rows of the most differentialy expressed genes
-top_genes_Genotype <- head(order(res_Genotype_df$padj), 50)
+top_genes_Genotype <- head(order(res_Genotype_df$padj), 30)
 mat_Genotype <- assay(vsd)[top_genes_Genotype, ]
 
-top_genes_Condition <- head(order(res_Condition_df$padj), 50)
+top_genes_Condition <- head(order(res_Condition_df$padj), 30)
 mat_Condition <- assay(vsd)[top_genes_Condition, ]
 
-top_genes_Interaction <- head(order(res_Interaction_df$padj), 50)
+top_genes_Interaction <- head(order(res_Interaction_df$padj), 30)
 mat_Interaction <- assay(vsd)[top_genes_Interaction, ] 
 
 
@@ -152,33 +152,39 @@ mat_Condition_clean <- clean_matrix_for_heatmap(mat_Condition)
 mat_Interaction_clean <- clean_matrix_for_heatmap(mat_Interaction)
 # heatmap for different highlighted result data frame
 pheatmap(mat_Genotype_clean,
-         scale = "row",
+         #scale = "row",
          main = "Genotype Effect (DKO vs WT in Control)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
-         show_rownames = TRUE, 
+         show_rownames = TRUE,
+         cluster_rows = TRUE,
+         cluster_cols = FALSE,
          fontsize = 10, 
          fontsize_row = 8,
-         #filename = "./results/R_plots/heatmap_Genotype.png"
+         filename = "./results/R_plots/heatmap_Genotype.png"
          )
 
 pheatmap(mat_Condition_clean,
-         scale = "row",
+         #scale = "row",
          main = "Condition Effect (Case vs Control in WT)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = TRUE, 
+         cluster_rows = TRUE,
+         cluster_cols = FALSE,
          fontsize = 10, 
          fontsize_row = 8,
-         #filename = "./results/R_plots/heatmap_Condition.png"
+         filename = "./results/R_plots/heatmap_Condition.png"
          )
 
 pheatmap(mat_Interaction_clean,
-         scale = "row",
+         #scale = "row",
          main = "Interaction Effect",
          annotation_col = as.data.frame(colData(dds)[,c("Genotype", "Condition")]), 
-         show_rownames = TRUE, 
+         show_rownames = TRUE,
+         cluster_rows = TRUE,
+         cluster_cols = FALSE,
          fontsize = 10, 
          fontsize_row = 8,
-         #filename = "./results/R_plots/heatmap_Interaction.png"
+         filename = "./results/R_plots/heatmap_Interaction.png"
          )
 
 # volcano plot for each result set and save them as png files 
