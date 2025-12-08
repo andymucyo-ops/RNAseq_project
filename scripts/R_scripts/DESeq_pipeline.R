@@ -92,7 +92,7 @@ resultsNames(dds)
 
 # get results comparison with 3 different methods 
 res_Genotype <- results(dds, name = "Genotype_DKO_vs_WT", alpha = 0.05) 
-# highlights the effect of the Genotype (DKO vs WT) in control condition, enables observation of the genes affected by DKO, regadless of the condition
+# highlights the effect of the Genotype (DKO vs WT) in control condition, enables observation of the genes affected by DKO, regardless of the condition
 # expected in heatmap: clear difference between 
 
 res_Condition <- results(dds, name = "Condition_Case_vs_Control", alpha = 0.05 )
@@ -131,32 +131,54 @@ top_genes_Interaction <- head(order(res_Interaction_df$padj), 50)
 mat_Interaction <- assay(vsd)[top_genes_Interaction, ] 
 
 
+clean_matrix_for_heatmap <- function(mat) {
+  # 1. Supprimer les lignes avec des NA
+  mat <- mat[complete.cases(mat), ]
+  
+  # 2. Supprimer les lignes avec variance nulle
+  row_vars <- apply(mat, 1, var)
+  mat <- mat[row_vars > 0, ]
+  
+  # 3. Supprimer les valeurs infinies
+  mat <- mat[is.finite(rowSums(mat)), ]
+  
+  return(mat)
+}
+
+mat_Genotype_clean <-  clean_matrix_for_heatmap(mat_Genotype)
+  
+mat_Condition_clean <- clean_matrix_for_heatmap(mat_Condition)
+  
+mat_Interaction_clean <- clean_matrix_for_heatmap(mat_Interaction)
 # heatmap for different highlighted result data frame
-pheatmap(mat_Genotype,
+pheatmap(mat_Genotype_clean,
+         scale = "row",
          main = "Genotype Effect (DKO vs WT in Control)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = TRUE, 
          fontsize = 10, 
          fontsize_row = 8,
-         filename = "./results/R_plots/heatmap_Genotype.png"
+         #filename = "./results/R_plots/heatmap_Genotype.png"
          )
 
-pheatmap(mat_Condition,
+pheatmap(mat_Condition_clean,
+         scale = "row",
          main = "Condition Effect (Case vs Control in WT)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = TRUE, 
          fontsize = 10, 
          fontsize_row = 8,
-         filename = "./results/R_plots/heatmap_Condition.png"
+         #filename = "./results/R_plots/heatmap_Condition.png"
          )
 
-pheatmap(mat_Interaction, 
+pheatmap(mat_Interaction_clean,
+         scale = "row",
          main = "Interaction Effect",
          annotation_col = as.data.frame(colData(dds)[,c("Genotype", "Condition")]), 
          show_rownames = TRUE, 
          fontsize = 10, 
          fontsize_row = 8,
-         filename = "./results/R_plots/heatmap_Interaction.png"
+         #filename = "./results/R_plots/heatmap_Interaction.png"
          )
 
 # volcano plot for each result set and save them as png files 
