@@ -67,7 +67,7 @@ run the following script ont the sorted bam files:
   
   The whole data treatment and analysis have been displayed in the following script 
     
-    DES_data_analysis.Rmd 
+    DES_data_analysis.R 
 
 
 
