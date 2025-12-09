@@ -91,14 +91,14 @@ dev.off()
 resultsNames(dds)
 
 # get results comparison with 3 different methods 
-res_Genotype <- results(dds, name = "Genotype_DKO_vs_WT", alpha = 0.05) 
+res_Genotype <- DESeq2::results(dds, name = "Genotype_DKO_vs_WT", alpha = 0.05, ) 
 # highlights the effect of the Genotype (DKO vs WT) in control condition, enables observation of the genes affected by DKO, regardless of the condition
 # expected in heatmap: clear difference between 
 
-res_Condition <- results(dds, name = "Condition_Case_vs_Control", alpha = 0.05 )
+res_Condition <- DESeq2::results(dds, name = "Condition_Case_vs_Control", alpha = 0.05)
 # highlights the response of the gene to the condition in WT (control vs case), and enables for comparison of the response in DKO 
 
-res_Interaction <- results(dds, name = "GenotypeDKO.ConditionCase", alpha = 0.05)
+res_Interaction <- DESeq2::results(dds, name = "GenotypeDKO.ConditionCase", alpha = 0.05)
 # highlight the response of the genes to the condition in WT and DKO
 # enables for verification of the genes for which the response to the condition depends on the Genotype
 
@@ -107,6 +107,10 @@ summary_Genotype <- summary(res_Genotype)
 summary_Condition <- summary(res_Condition)
 summary_Interaction <- summary(res_Interaction)
 
+sum(! is.na(res_Genotype$padj) & res_Genotype$padj < 0.05 & res_Genotype$log2FoldChange < 1)
+sum(! is.na(res_Condition$padj) & res_Condition$padj < 0.05 & res_Condition$log2FoldChange < 1)
+sum(! is.na(res_Interaction$padj) & res_Interaction$padj < 0.05 & res_Interaction$log2FoldChange < 1)
+
 
 #transform results data into data frame
 res_Genotype_df <- as.data.frame(res_Genotype)
@@ -114,21 +118,21 @@ res_Condition_df <- as.data.frame(res_Condition)
 res_Interaction_df <- as.data.frame(res_Interaction)
 
 #remove NA values from data frame 
-res_Genotype_df <- res_Genotype_df[!is.na(res_Genotype_df$padj),]
-res_Condition_df <- res_Condition_df[!is.na(res_Condition_df$padj),]
-res_Interaction_df <- res_Interaction_df[!is.na(res_Interaction_df$padj),]
+res_Genotype_df <- res_Genotype_df[!is.na(res_Genotype_df$padj) & res_Genotype_df$padj < 0.05,]
+res_Condition_df <- res_Condition_df[!is.na(res_Condition_df$padj) & res_Condition_df$padj < 0.05,]
+res_Interaction_df <- res_Interaction_df[!is.na(res_Interaction_df$padj) & res_Interaction_df$padj < 0.05,]
 
 # selection of the top 50 genes for each result data frame 
-# first we create a vector containing the to 50 differentialy expressed genes in each result table based on padj values 
+# first we create a vector containing the to 50 differentially expressed genes in each result table based on padj values 
 # then create a matrix containg each column of the transformed count matrix but only the rows of the most differentialy expressed genes
-top_genes_Genotype <- head(order(res_Genotype_df$padj), 30)
-mat_Genotype <- assay(vsd)[top_genes_Genotype, ]
+top_genes_Genotype <- head(order(res_Genotype_df$padj), 50)
+mat_Genotype <- SummarizedExperiment::assay(vsd)[top_genes_Genotype, ]
 
-top_genes_Condition <- head(order(res_Condition_df$padj), 30)
-mat_Condition <- assay(vsd)[top_genes_Condition, ]
+top_genes_Condition <- head(order(res_Condition_df$padj), 50)
+mat_Condition <- SummarizedExperiment::assay(vsd)[top_genes_Condition, ]
 
-top_genes_Interaction <- head(order(res_Interaction_df$padj), 30)
-mat_Interaction <- assay(vsd)[top_genes_Interaction, ] 
+top_genes_Interaction <- head(order(res_Interaction_df$padj), 50)
+mat_Interaction <- SummarizedExperiment::assay(vsd)[top_genes_Interaction, ] 
 
 
 clean_matrix_for_heatmap <- function(mat) {
@@ -152,36 +156,36 @@ mat_Condition_clean <- clean_matrix_for_heatmap(mat_Condition)
 mat_Interaction_clean <- clean_matrix_for_heatmap(mat_Interaction)
 # heatmap for different highlighted result data frame
 pheatmap(mat_Genotype_clean,
-         #scale = "row",
+         scale = "row",
          main = "Genotype Effect (DKO vs WT in Control)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
-         show_rownames = TRUE,
+         show_rownames = FALSE,
          cluster_rows = TRUE,
-         cluster_cols = FALSE,
+         cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Genotype.png"
          )
 
 pheatmap(mat_Condition_clean,
-         #scale = "row",
+         scale = "row",
          main = "Condition Effect (Case vs Control in WT)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
-         show_rownames = TRUE, 
+         show_rownames = FALSE, 
          cluster_rows = TRUE,
-         cluster_cols = FALSE,
+         cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Condition.png"
          )
 
 pheatmap(mat_Interaction_clean,
-         #scale = "row",
+         scale = "row",
          main = "Interaction Effect",
          annotation_col = as.data.frame(colData(dds)[,c("Genotype", "Condition")]), 
-         show_rownames = TRUE,
+         show_rownames = FALSE,
          cluster_rows = TRUE,
-         cluster_cols = FALSE,
+         cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Interaction.png"
