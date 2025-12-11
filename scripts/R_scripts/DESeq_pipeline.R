@@ -110,7 +110,7 @@ summary_Condition <- summary(res_Condition)
 summary_Interaction <- summary(res_Interaction)
 
 
-# get the significant genes for each result method, then reduce it to the top 50 differentially expressed genes
+# get the significant genes for each result method, then reduce it to the top 50 differentialy expressed genes
 sig_genes_Genotype <- rownames(res_Genotype)[which(!is.na(res_Genotype$padj) & 
                                         res_Genotype$padj < 0.05 & 
                                         abs(res_Genotype$log2FoldChange) > 1)]
@@ -132,7 +132,7 @@ sig_genes_Interaction <- rownames(res_Interaction)[which(!is.na(res_Interaction$
 top50_genes_Interaction <- sig_genes_Interaction[1:50]
 
  
-# extreact the transformed count matching the to 50 genes for each condition
+# extract the transformed count matrix matching the top 50 genes for each results highlight
 mat_Genotype <- assay(vsd)[top50_genes_Genotype, ]
 mat_Condition <- assay(vsd)[top50_genes_Condition, ]
 mat_Interaction <- assay(vsd)[top50_genes_Interaction, ] 
@@ -145,7 +145,7 @@ pheatmap(mat_Genotype,
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = FALSE,
          cluster_rows = TRUE,
-         cluster_cols = FALSE,
+         cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Genotype.png"
@@ -157,7 +157,7 @@ pheatmap(mat_Condition,
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = FALSE, 
          cluster_rows = TRUE,
-         cluster_cols = FALSE,
+         cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Condition.png"
@@ -169,7 +169,7 @@ pheatmap(mat_Interaction,
          annotation_col = as.data.frame(colData(dds)[,c("Genotype", "Condition")]), 
          show_rownames = FALSE,
          cluster_rows = TRUE,
-         cluster_cols = FALSE,
+         cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Interaction.png"
