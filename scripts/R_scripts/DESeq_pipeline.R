@@ -87,11 +87,12 @@ plotPCA(vsd,
   ) # visualization plot of the clustering of the data
 
 dev.off()
+
 # get results coefficient to use for highlight in the following result step
 resultsNames(dds)
 
 # get results comparison with 3 different methods 
-res_Genotype <- DESeq2::results(dds, name = "Genotype_DKO_vs_WT", alpha = 0.05, ) 
+res_Genotype <- DESeq2::results(dds, name = "Genotype_DKO_vs_WT", alpha = 0.05) 
 # highlights the effect of the Genotype (DKO vs WT) in control condition, enables observation of the genes affected by DKO, regardless of the condition
 # expected in heatmap: clear difference between 
 
@@ -102,90 +103,73 @@ res_Interaction <- DESeq2::results(dds, name = "GenotypeDKO.ConditionCase", alph
 # highlight the response of the genes to the condition in WT and DKO
 # enables for verification of the genes for which the response to the condition depends on the Genotype
 
+
 # get summary of the result data output for each comparison method
 summary_Genotype <- summary(res_Genotype)
 summary_Condition <- summary(res_Condition)
 summary_Interaction <- summary(res_Interaction)
 
-sum(! is.na(res_Genotype$padj) & res_Genotype$padj < 0.05 & res_Genotype$log2FoldChange < 1)
-sum(! is.na(res_Condition$padj) & res_Condition$padj < 0.05 & res_Condition$log2FoldChange < 1)
-sum(! is.na(res_Interaction$padj) & res_Interaction$padj < 0.05 & res_Interaction$log2FoldChange < 1)
+
+# get the significant genes for each result method, then reduce it to the top 50 differentially expressed genes
+sig_genes_Genotype <- rownames(res_Genotype)[which(!is.na(res_Genotype$padj) & 
+                                        res_Genotype$padj < 0.05 & 
+                                        abs(res_Genotype$log2FoldChange) > 1)]
+
+top50_genes_Genotype <- sig_genes_Genotype[1:50]
 
 
-#transform results data into data frame
-res_Genotype_df <- as.data.frame(res_Genotype)
-res_Condition_df <- as.data.frame(res_Condition)
-res_Interaction_df <- as.data.frame(res_Interaction)
+sig_genes_Condition <- rownames(res_Condition)[which(!is.na(res_Condition$padj) & 
+                                        res_Condition$padj < 0.05 & 
+                                        abs(res_Condition$log2FoldChange) > 1)]
 
-#remove NA values from data frame 
-res_Genotype_df <- res_Genotype_df[!is.na(res_Genotype_df$padj) & res_Genotype_df$padj < 0.05,]
-res_Condition_df <- res_Condition_df[!is.na(res_Condition_df$padj) & res_Condition_df$padj < 0.05,]
-res_Interaction_df <- res_Interaction_df[!is.na(res_Interaction_df$padj) & res_Interaction_df$padj < 0.05,]
-
-# selection of the top 50 genes for each result data frame 
-# first we create a vector containing the to 50 differentially expressed genes in each result table based on padj values 
-# then create a matrix containg each column of the transformed count matrix but only the rows of the most differentialy expressed genes
-top_genes_Genotype <- head(order(res_Genotype_df$padj), 50)
-mat_Genotype <- SummarizedExperiment::assay(vsd)[top_genes_Genotype, ]
-
-top_genes_Condition <- head(order(res_Condition_df$padj), 50)
-mat_Condition <- SummarizedExperiment::assay(vsd)[top_genes_Condition, ]
-
-top_genes_Interaction <- head(order(res_Interaction_df$padj), 50)
-mat_Interaction <- SummarizedExperiment::assay(vsd)[top_genes_Interaction, ] 
+top50_genes_Condition <- sig_genes_Condition[1:50]
 
 
-clean_matrix_for_heatmap <- function(mat) {
-  # 1. Supprimer les lignes avec des NA
-  mat <- mat[complete.cases(mat), ]
-  
-  # 2. Supprimer les lignes avec variance nulle
-  row_vars <- apply(mat, 1, var)
-  mat <- mat[row_vars > 0, ]
-  
-  # 3. Supprimer les valeurs infinies
-  mat <- mat[is.finite(rowSums(mat)), ]
-  
-  return(mat)
-}
+sig_genes_Interaction <- rownames(res_Interaction)[which(!is.na(res_Interaction$padj) & 
+                                        res_Interaction$padj < 0.05 & 
+                                        abs(res_Interaction$log2FoldChange) > 1)]
 
-mat_Genotype_clean <-  clean_matrix_for_heatmap(mat_Genotype)
-  
-mat_Condition_clean <- clean_matrix_for_heatmap(mat_Condition)
-  
-mat_Interaction_clean <- clean_matrix_for_heatmap(mat_Interaction)
+top50_genes_Interaction <- sig_genes_Interaction[1:50]
+
+ 
+# extreact the transformed count matching the to 50 genes for each condition
+mat_Genotype <- assay(vsd)[top50_genes_Genotype, ]
+mat_Condition <- assay(vsd)[top50_genes_Condition, ]
+mat_Interaction <- assay(vsd)[top50_genes_Interaction, ] 
+
+
 # heatmap for different highlighted result data frame
-pheatmap(mat_Genotype_clean,
+pheatmap(mat_Genotype,
          scale = "row",
          main = "Genotype Effect (DKO vs WT in Control)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = FALSE,
          cluster_rows = TRUE,
-         cluster_cols = TRUE,
+         cluster_cols = FALSE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Genotype.png"
          )
 
-pheatmap(mat_Condition_clean,
+pheatmap(mat_Condition,
          scale = "row",
          main = "Condition Effect (Case vs Control in WT)",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
          show_rownames = FALSE, 
          cluster_rows = TRUE,
-         cluster_cols = TRUE,
+         cluster_cols = FALSE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Condition.png"
          )
 
-pheatmap(mat_Interaction_clean,
+pheatmap(mat_Interaction,
          scale = "row",
          main = "Interaction Effect",
          annotation_col = as.data.frame(colData(dds)[,c("Genotype", "Condition")]), 
          show_rownames = FALSE,
          cluster_rows = TRUE,
-         cluster_cols = TRUE,
+         cluster_cols = FALSE,
          fontsize = 10, 
          fontsize_row = 8,
          filename = "./results/R_plots/heatmap_Interaction.png"
@@ -200,8 +184,8 @@ png(filename = "./results/R_plots/volcano_plot_Genotype.png",
     res = 300)
 
 EnhancedVolcano(
-  res_Genotype_df,
-  lab = rownames(res_Genotype_df),
+  res_Genotype,
+  lab = rownames(res_Genotype),
   x = 'log2FoldChange',
   y = 'padj',
   title = 'Genotype Effect: DKO vs WT',
@@ -217,8 +201,8 @@ png(filename = "./results/R_plots/volcano_plot_Condition.png",
     res = 300)
 
 EnhancedVolcano(
-  res_Condition_df,
-  lab = rownames(res_Condition_df),
+  res_Condition,
+  lab = rownames(res_Condition),
   x = 'log2FoldChange',
   y = 'padj',
   title = 'Condition Effect: Case vs Control',
@@ -234,8 +218,8 @@ png(filename = "./results/R_plots/volcano_plot_Interaction.png",
     res = 300)
 
 EnhancedVolcano(
-  res_Interaction_df,
-  lab = rownames(res_Interaction_df),
+  res_Interaction,
+  lab = rownames(res_Interaction),
   x = 'log2FoldChange',
   y = 'padj',
   title = 'Interaction Effect',
