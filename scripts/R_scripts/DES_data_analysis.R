@@ -288,10 +288,27 @@ ego_DKOvsWT <- enrichGO(
 
 head(ego_DKOvsWT,3)
 
-# data visualization of ego's 
+# ego's bar plots
 
+png(filename = "./results/R_plots/barplot_enrichGO_WT.png",
+    width = 3000,
+    height = 2400,
+    res = 300)
 barplot(ego_WT, showCategory = 10) + ggtitle("Enriched terms bar plot", "In WT: in case vs control comparison")
+dev.off()
 
+
+png(filename = "./results/R_plots/barplot_enrichGO_DKO.png",
+    width = 3000,
+    height = 2400,
+    res = 300)
 barplot(ego_DKO, showCategory = 8) + ggtitle("Enriched terms bar plot", "In DKO: case vs control comparison")
+dev.off()
 
+
+png(filename = "./results/R_plots/barplot_enrichGO_DKOvsWT.png",
+    width = 3000,
+    height = 2400,
+    res = 300)
 barplot(ego_DKOvsWT, showCategory = 10) + ggtitle("Enriched terms bar plot", "In Control condition: DKO vs WT comparison")
+dev.off()
