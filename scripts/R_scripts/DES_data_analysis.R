@@ -6,6 +6,7 @@ library("ggrepel")
 library("ggplot2")
 library("EnhancedVolcano")
 library("org.Mm.eg.db")
+library("enrichplot")
 
 # ------------------------------------------------------------------------------
 # 1) Data formatting before analysis
@@ -104,30 +105,34 @@ res_DKOvsWT_case <- results(dds, name = "GenotypeDKO.ConditionCase", alpha = 0.0
 
 
 # get summary of the result data output for each comparison method
-summary_WT <- summary(res_WT)
-summary_DKO <- summary(res_DKO)
-summary_DKOvsWT_case <- summary(res_DKOvsWT_case)
+summary_WT <- summary(res_WT) 
+summary_DKO <- summary(res_DKO) 
+summary_DKOvsWT_case <- summary(res_DKOvsWT_case) 
 
 
 # get the significant genes for each result method, then reduce it to the top 50 differentialy expressed genes
+# WT
 sig_genes_WT <- rownames(res_WT)[which(!is.na(res_WT$padj) & 
                                         res_WT$padj < 0.05 & 
                                         abs(res_WT$log2FoldChange) > 1)]
 
+filtered_counts_WT <- length(sig_genes_WT) # nmbr of genes after filtering: 6768
 top50_genes_WT <- sig_genes_WT[1:50]
 
-
+# DKO
 sig_genes_DKO <- rownames(res_DKO)[which(!is.na(res_DKO$padj) & 
                                         res_DKO$padj < 0.05 & 
                                         abs(res_DKO$log2FoldChange) > 1)]
 
+filtered_counts_DKO <- length(sig_genes_DKO) # nmbr of genes after filtering: 5450
 top50_genes_DKO <- sig_genes_DKO[1:50]
 
-
+# DKO vs WT
 sig_genes_DKOvsWT_case <- rownames(res_DKOvsWT_case)[which(!is.na(res_DKOvsWT_case$padj) & 
                                         res_DKOvsWT_case$padj < 0.05 & 
                                         abs(res_DKOvsWT_case$log2FoldChange) > 1)]
 
+filtered_counts_DKOvsWT <- length(sig_genes_DKOvsWT_case) # nmbr of genes after filtering: 3745
 top50_genes_DKOvsWT_case <- sig_genes_DKOvsWT_case[1:50]
 
  
@@ -232,4 +237,61 @@ dev.off()
 
 # ------------------------------------------------------------------------------
 
+#start enrichGO analysis 
 
+# save gene list of differentialy expressed genes, for each results data
+gene_list_WT <- sig_genes_WT
+
+gene_list_DKO <- sig_genes_DKO
+
+gene_list_DKOvsWT_case <- sig_genes_DKOvsWT_case
+
+
+# set universe list (ensemble of all genes), cf. summary(res)
+
+universe_WT <- rownames(res_WT)[which(!is.na(res_WT$padj))]
+
+universe_DKO <- rownames(res_DKO)[which(!is.na(res_DKO$padj))]
+
+universe_DKOvsWT <- rownames(res_DKOvsWT_case)[which(!is.na(res_DKOvsWT_case$padj))]
+
+
+# create enrivhGO (ego) object for each result
+
+ego_WT <- enrichGO(
+gene = gene_list_WT,
+universe = universe_WT,
+OrgDb = org.Mm.eg.db,
+ont = "BP",
+keyType = "ENSEMBL",
+readable = TRUE)
+
+head(ego_WT,3)
+
+ego_DKO <- enrichGO(
+  gene = gene_list_DKO,
+  universe = universe_DKO,
+  OrgDb = org.Mm.eg.db,
+  ont = "BP",
+  keyType = "ENSEMBL",
+  readable = TRUE)
+
+head(ego_DKO,3)
+
+ego_DKOvsWT <- enrichGO(
+  gene = gene_list_DKOvsWT_case,
+  universe = universe_DKOvsWT,
+  OrgDb = org.Mm.eg.db,
+  ont = "BP",
+  keyType = "ENSEMBL",
+  readable = TRUE) 
+
+head(ego_DKOvsWT,3)
+
+# data visualization of ego's 
+
+barplot(ego_WT, showCategory = 10) + ggtitle("Enriched terms bar plot", "In WT: in case vs control comparison")
+
+barplot(ego_DKO, showCategory = 8) + ggtitle("Enriched terms bar plot", "In DKO: case vs control comparison")
+
+barplot(ego_DKOvsWT, showCategory = 10) + ggtitle("Enriched terms bar plot", "In Control condition: DKO vs WT comparison")
