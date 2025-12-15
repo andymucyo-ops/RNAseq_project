@@ -5,7 +5,7 @@ library("pheatmap")
 library("ggrepel")
 library("ggplot2")
 library("EnhancedVolcano")
-
+library("org.Mm.eg.db")
 
 # ------------------------------------------------------------------------------
 # 1) Data formatting before analysis
@@ -92,138 +92,140 @@ dev.off()
 resultsNames(dds)
 
 # get results comparison with 3 different methods 
-res_Genotype <- DESeq2::results(dds, name = "Genotype_DKO_vs_WT", alpha = 0.05) 
-# highlights the effect of the Genotype (DKO vs WT) in control condition, enables observation of the genes affected by DKO, regardless of the condition
-# expected in heatmap: clear difference between 
+res_WT <- results(dds, name = "Condition_Case_vs_Control", alpha = 0.05) 
+#Highlight differences of expression between control and case in WT 
 
-res_Condition <- DESeq2::results(dds, name = "Condition_Case_vs_Control", alpha = 0.05)
-# highlights the response of the gene to the condition in WT (control vs case), and enables for comparison of the response in DKO 
+res_DKO <- results(dds, contrast = list(c("GenotypeDKO.ConditionCase","Condition_Case_vs_Control")), alpha = 0.05)
+# highlight of the difference of expression between control and case in DKO
 
-res_Interaction <- DESeq2::results(dds, name = "GenotypeDKO.ConditionCase", alpha = 0.05)
-# highlight the response of the genes to the condition in WT and DKO
+res_DKOvsWT_case <- results(dds, name = "GenotypeDKO.ConditionCase", alpha = 0.05)
+# highlight the response of the genes in control condition between WT and DKO
 # enables for verification of the genes for which the response to the condition depends on the Genotype
 
 
 # get summary of the result data output for each comparison method
-summary_Genotype <- summary(res_Genotype)
-summary_Condition <- summary(res_Condition)
-summary_Interaction <- summary(res_Interaction)
+summary_WT <- summary(res_WT)
+summary_DKO <- summary(res_DKO)
+summary_DKOvsWT_case <- summary(res_DKOvsWT_case)
 
 
 # get the significant genes for each result method, then reduce it to the top 50 differentialy expressed genes
-sig_genes_Genotype <- rownames(res_Genotype)[which(!is.na(res_Genotype$padj) & 
-                                        res_Genotype$padj < 0.05 & 
-                                        abs(res_Genotype$log2FoldChange) > 1)]
+sig_genes_WT <- rownames(res_WT)[which(!is.na(res_WT$padj) & 
+                                        res_WT$padj < 0.05 & 
+                                        abs(res_WT$log2FoldChange) > 1)]
 
-top50_genes_Genotype <- sig_genes_Genotype[1:50]
-
-
-sig_genes_Condition <- rownames(res_Condition)[which(!is.na(res_Condition$padj) & 
-                                        res_Condition$padj < 0.05 & 
-                                        abs(res_Condition$log2FoldChange) > 1)]
-
-top50_genes_Condition <- sig_genes_Condition[1:50]
+top50_genes_WT <- sig_genes_WT[1:50]
 
 
-sig_genes_Interaction <- rownames(res_Interaction)[which(!is.na(res_Interaction$padj) & 
-                                        res_Interaction$padj < 0.05 & 
-                                        abs(res_Interaction$log2FoldChange) > 1)]
+sig_genes_DKO <- rownames(res_DKO)[which(!is.na(res_DKO$padj) & 
+                                        res_DKO$padj < 0.05 & 
+                                        abs(res_DKO$log2FoldChange) > 1)]
 
-top50_genes_Interaction <- sig_genes_Interaction[1:50]
+top50_genes_DKO <- sig_genes_DKO[1:50]
+
+
+sig_genes_DKOvsWT_case <- rownames(res_DKOvsWT_case)[which(!is.na(res_DKOvsWT_case$padj) & 
+                                        res_DKOvsWT_case$padj < 0.05 & 
+                                        abs(res_DKOvsWT_case$log2FoldChange) > 1)]
+
+top50_genes_DKOvsWT_case <- sig_genes_DKOvsWT_case[1:50]
 
  
 # extract the transformed count matrix matching the top 50 genes for each results highlight
-mat_Genotype <- assay(vsd)[top50_genes_Genotype, ]
-mat_Condition <- assay(vsd)[top50_genes_Condition, ]
-mat_Interaction <- assay(vsd)[top50_genes_Interaction, ] 
+mat_WT <- assay(vsd)[top50_genes_WT, ]
+mat_DKO <- assay(vsd)[top50_genes_DKO, ]
+mat_DKOvsWT_case <- assay(vsd)[top50_genes_DKOvsWT_case, ] 
 
 
 # heatmap for different highlighted result data frame
-pheatmap(mat_Genotype,
+pheatmap(mat_WT,
          scale = "row",
-         main = "Genotype Effect (DKO vs WT in Control)",
+         main = "Case vs Control condition comparison in WT genotype",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
+         # clustering_distance_cols = "binary",
          show_rownames = FALSE,
          cluster_rows = TRUE,
          cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
-         filename = "./results/R_plots/heatmap_Genotype.png"
+         filename = "./results/R_plots/heatmap_WT.png"
          )
 
-pheatmap(mat_Condition,
+pheatmap(mat_DKO,
          scale = "row",
-         main = "Condition Effect (Case vs Control in WT)",
+         main = "Case vs Control condition comparison in DKO genotype",
          annotation_col = as.data.frame(colData(dds)[, c("Genotype", "Condition")]), 
+         # clustering_distance_cols = "binary",
          show_rownames = FALSE, 
          cluster_rows = TRUE,
          cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
-         filename = "./results/R_plots/heatmap_Condition.png"
+         filename = "./results/R_plots/heatmap_DKO.png"
          )
 
-pheatmap(mat_Interaction,
+pheatmap(mat_DKOvsWT_case,
          scale = "row",
-         main = "Interaction Effect",
+         main = "DKO vs WT in case condition",
          annotation_col = as.data.frame(colData(dds)[,c("Genotype", "Condition")]), 
+         # clustering_distance_cols = "binary",
          show_rownames = FALSE,
          cluster_rows = TRUE,
          cluster_cols = TRUE,
          fontsize = 10, 
          fontsize_row = 8,
-         filename = "./results/R_plots/heatmap_Interaction.png"
+         filename = "./results/R_plots/heatmap_DKOvsWT_case.png"
          )
 
 # volcano plot for each result set and save them as png files 
 
 # Genotype DKO vs WT volcano plot
-png(filename = "./results/R_plots/volcano_plot_Genotype.png",
+png(filename = "./results/R_plots/volcano_plot_WT.png",
     width = 3000,
     height = 2400,
     res = 300)
 
 EnhancedVolcano(
-  res_Genotype,
-  lab = rownames(res_Genotype),
+  res_WT,
+  lab = rownames(res_WT),
   x = 'log2FoldChange',
   y = 'padj',
-  title = 'Genotype Effect: DKO vs WT',
-  subtitle = 'In Control condition'
+  title = 'Genotype effect: Case vs Control',
+  subtitle = 'Differential response in WT'
   )
 
 dev.off()
 
 # Condition case vs control volcano plot
-png(filename = "./results/R_plots/volcano_plot_Condition.png",
+png(filename = "./results/R_plots/volcano_plot_DKO.png",
     width = 3000,
     height = 2400,
     res = 300)
 
 EnhancedVolcano(
-  res_Condition,
-  lab = rownames(res_Condition),
+  res_DKO,
+  lab = rownames(res_DKO),
   x = 'log2FoldChange',
   y = 'padj',
-  title = 'Condition Effect: Case vs Control',
-  subtitle = 'In WT genotype'
+  title = 'Genotype effect: Case vs Control',
+  subtitle = 'Differential response in DKO'
   )
 
 dev.off()
 
 # Interaction volcano plot
-png(filename = "./results/R_plots/volcano_plot_Interaction.png",
+png(filename = "./results/R_plots/volcano_plot_DKOvsWT_case.png",
     width = 3000,
     height = 2400,
     res = 300)
 
 EnhancedVolcano(
-  res_Interaction,
-  lab = rownames(res_Interaction),
+  res_DKOvsWT_case,
+  lab = rownames(res_DKOvsWT_case),
   x = 'log2FoldChange',
   y = 'padj',
-  title = 'Interaction Effect',
-  subtitle = 'Differential response to Case in DKO vs WT'
+  title = 'Condition effect: DKO vs WT',
+  subtitle = 'Differential response in Control control condition'
   )
 
 dev.off()
