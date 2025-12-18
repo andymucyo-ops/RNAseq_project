@@ -153,34 +153,27 @@ summary_DKOvsWT_case <- summary(res_DKOvsWT_case)
 
 
 # get the significant genes for each result method, then reduce it to the top 50 differentialy expressed genes
+
+#set filtering criteria for each result set
+filtering_criteria <- which(
+  !is.na(res_WT$padj) &
+    res_WT$padj < 0.05 &
+    abs(res_WT$log2FoldChange) > 1
+)
+
 # WT
-
-sig_genes_WT <- rownames(res_WT)[which(
-	!is.na(res_WT$padj) &
-		res_WT$padj < 0.05 &
-		abs(res_WT$log2FoldChange) > 1
-)]
-
+sig_genes_WT <- rownames(res_WT)[filtering_criteria][order(res_WT$padj[filtering_criteria])]
 filtered_counts_WT <- length(sig_genes_WT) # nmbr of genes after filtering: 6768
 top50_genes_WT <- sig_genes_WT[1:50]
 
 # DKO
-sig_genes_DKO <- rownames(res_DKO)[which(
-	!is.na(res_DKO$padj) &
-		res_DKO$padj < 0.05 &
-		abs(res_DKO$log2FoldChange) > 1
-)]
 
+sig_genes_DKO <- rownames(res_DKO)[filtering_criteria][order(res_DKO$padj[filtering_criteria])]
 filtered_counts_DKO <- length(sig_genes_DKO) # nmbr of genes after filtering: 5450
 top50_genes_DKO <- sig_genes_DKO[1:50]
 
 # DKO vs WT
-sig_genes_DKOvsWT_case <- rownames(res_DKOvsWT_case)[which(
-	!is.na(res_DKOvsWT_case$padj) &
-		res_DKOvsWT_case$padj < 0.05 &
-		abs(res_DKOvsWT_case$log2FoldChange) > 1
-)]
-
+sig_genes_DKOvsWT_case <- rownames(res_DKOvsWT_case)[filtering_criteria][order(res_DKOvsWT_case$padj[filtering_criteria])]
 filtered_counts_DKOvsWT <- length(sig_genes_DKOvsWT_case) # nmbr of genes after filtering: 3745
 top50_genes_DKOvsWT_case <- sig_genes_DKOvsWT_case[1:50]
 
