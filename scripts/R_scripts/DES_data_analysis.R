@@ -1,6 +1,3 @@
-#set wroking directory
-setwd("~/R-projects/RNAseq_project/")
-
 #load libraries
 
 library("DESeq2")
@@ -11,6 +8,9 @@ library("ggrepel")
 library("EnhancedVolcano")
 library("org.Mm.eg.db")
 library("enrichplot")
+
+#set wroking directory
+setwd("~/R-projects/RNAseq_project/")
 
 # ------------------------------------------------------------------------------
 # 1) Data formatting before analysis
