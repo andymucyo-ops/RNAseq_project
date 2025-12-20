@@ -163,24 +163,24 @@ filtering_criteria <- which(
 # WT
 sig_genes_WT <- rownames(res_WT)[filtering_criteria][order(res_WT$padj[filtering_criteria])]
 filtered_counts_WT <- length(sig_genes_WT) # nmbr of genes after filtering: 6768
-top500_genes_WT <- sig_genes_WT[1:500]
+top200_genes_WT <- sig_genes_WT[1:200]
 
 # DKO
 
 sig_genes_DKO <- rownames(res_DKO)[filtering_criteria][order(res_DKO$padj[filtering_criteria])]
 filtered_counts_DKO <- length(sig_genes_DKO) # nmbr of genes after filtering: 5450
-top500_genes_DKO <- sig_genes_DKO[1:500]
+top200_genes_DKO <- sig_genes_DKO[1:200]
 
 # DKO vs WT
 sig_genes_DKOvsWT_case <- rownames(res_DKOvsWT_case)[filtering_criteria][order(res_DKOvsWT_case$padj[filtering_criteria])]
 filtered_counts_DKOvsWT <- length(sig_genes_DKOvsWT_case) # nmbr of genes after filtering: 3745
-top500_genes_DKOvsWT_case <- sig_genes_DKOvsWT_case[1:500]
+top200_genes_DKOvsWT_case <- sig_genes_DKOvsWT_case[1:200]
 
 
 # extract the transformed count matrix matching the top 50 genes for each results highlight
-mat_WT <- assay(vsd)[top500_genes_WT, ]
-mat_DKO <- assay(vsd)[top500_genes_DKO, ]
-mat_DKOvsWT_case <- assay(vsd)[top500_genes_DKOvsWT_case, ]
+mat_WT <- assay(vsd)[top200_genes_WT, ]
+mat_DKO <- assay(vsd)[top200_genes_DKO, ]
+mat_DKOvsWT_case <- assay(vsd)[top200_genes_DKOvsWT_case, ]
 
 
 # heatmap for different highlighted result data frame
@@ -294,8 +294,6 @@ dev.off()
 # ------------------------------------------------------------------------------
 # 4) enrichGO analysis
 # ------------------------------------------------------------------------------
-
-#start enrichGO analysis
 
 # save gene list of differentialy expressed genes, for each results data
 gene_list_WT <- sig_genes_WT
