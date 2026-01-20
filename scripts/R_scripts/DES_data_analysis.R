@@ -12,10 +12,11 @@ library("enrichplot")
 #set wroking directory
 setwd("~/Projects/R/RNAseq_project/")
 
-# ---------------------------------------------------------------------
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
 # 1) Data formatting before analysis
-# ---------------------------------------------------------------------
-
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
 # set file path
 sample_counts_path <- "~/Projects/R/RNAseq_project/data/count.txt"
 
@@ -49,10 +50,11 @@ head(sample_info)
 # final check before launching DESeq (Must return TRUE to perform DESeq analysis!)
 all(rownames(sample_info) == colnames(counts))
 
-
-#-----------------------------------------------------------------------
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
 # 2) start Differential gene expression analysis
-#-----------------------------------------------------------------------
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
 
 # create DESeq data set from the feature counts data and the counts meta data(sample_info)
 dds <- DESeqDataSetFromMatrix(
@@ -68,9 +70,11 @@ dds$Group <- as.factor(dds$Group)
 # run differential expression analysis
 dds <- DESeq(dds)
 
-#-----------------------------------------------------------------------
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
 # 3) Results and data visualization
-#-----------------------------------------------------------------------
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
 
 # extraction of transformed values (corrected counts) of counts into new matrix to nromalize counts and compare them
 vsd <- vst(dds, blind = FALSE)
@@ -92,9 +96,9 @@ plotPCA(
 
 dev.off()
 
-#-----------------------------------------------------------------------
+#------------------------------------------------------------------------
 # get results comparison with 4 different methods
-#-----------------------------------------------------------------------
+# -----------------------------------------------------------------------
 #Highlight differences of expression between case and control condition in WT genotype
 res_WT <- results(
   dds,
@@ -330,9 +334,11 @@ EnhancedVolcano(
 
 dev.off()
 
-# -----------------------------------------------------------------------
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
 # 4) enrichGO analysis
-# -----------------------------------------------------------------------
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
 
 # save gene list of differentialy expressed genes, for each results data
 gene_list_WT <- top50_WT
@@ -406,6 +412,8 @@ head(ego_DKOvsWT_control, 3)
 #-----------------------------------------------------------------------
 # ego's bar plots
 #-----------------------------------------------------------------------
+
+# WT case vs control comparison bar plot
 png(
   filename = "./results/R_plots/barplot_enrichGO_WT.png",
   width = 3000,
@@ -419,7 +427,7 @@ barplot(ego_WT, x = "Count") +
   )
 dev.off()
 
-
+# DKO case vs control comparison bar plot
 png(
   filename = "./results/R_plots/barplot_enrichGO_DKO.png",
   width = 3000,
@@ -430,7 +438,7 @@ barplot(ego_DKO, x = "Count") +
   ggtitle("Enriched terms bar plot", "In DKO: case vs control comparison")
 dev.off()
 
-
+# Case DKO vs WT comparison bar plot
 png(
   filename = "./results/R_plots/barplot_enrichGO_DKOvsWT_case.png",
   width = 3000,
@@ -444,7 +452,7 @@ barplot(ego_DKOvsWT_case, x = "Count") +
   )
 dev.off()
 
-
+# Control DKO vs WT comparison bar plot
 png(
   filename = "./results/R_plots/barplot_enrichGO_DKOvsWT_control.png",
   width = 3000,
