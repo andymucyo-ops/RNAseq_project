@@ -15,6 +15,7 @@
 *.sa
 # --- resuls, output and logs ---
 *.csv
+*.txt
 *.tsv
 *.log
 *.out
@@ -28,8 +29,6 @@
 *.summary
 *.json
 *.Rproj
-data/corrected_count.txt.summary
-data/corrected_count.txt
 results/alignment
 results/count_reads
 DESeq_data_analysis.md 
