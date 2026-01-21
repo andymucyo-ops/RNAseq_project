@@ -171,6 +171,11 @@ write.csv(
 )
 
 # store summary of differentialy expressed genes for each result method
+summary(res_WT)
+summary(res_DKO)
+summary(res_DKOvsWT_control)
+summary(res_DKOvsWT_case)
+
 deg_summary <- data.frame(
   Comparison = c(
     "WT_CaseVsControl",
@@ -360,8 +365,7 @@ EnhancedVolcano(
 
 dev.off()
 
-
-# Interaction volcano plot
+# DKO vs WT genotype comparison in Control condition
 png(
   filename = "./results/R_plots/volcano_plot_DKOvsWT_control.png",
   width = 3000,
