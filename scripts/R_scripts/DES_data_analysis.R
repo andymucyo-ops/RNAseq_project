@@ -197,7 +197,7 @@ write.csv(deg_summary, "./results/tables/DEG_summary.csv", row.names = FALSE)
 
 #Create function to retrieve top 50 genes for each result sets
 get_top_genes <- function(res, padj_cutoff = 0.05, lfc_cutoff = 1, n = 50) {
-  #set filtering criteria for the results with padj defined and absolute value of log2FoldChange > 1
+  #set filtering criteria for the results with padj is defined and above 0.05(or other set padj value) and absolute value of lfc above set lfc cutoff
   filtering_criteria <- which(
     !is.na(res$padj) &
       res$padj < padj_cutoff &
@@ -388,7 +388,7 @@ dev.off()
 
 # Create function to retrieve all significant genes for each result
 get_all_sig_genes <- function(res, padj_cutoff = 0.05, lfc_cutoff = 1) {
-  #set filtering criteria for the results with padj defined and absolute value of log2FoldChange > 1
+  #set filtering criteria for the results with padj is defined and above 0.05(or other set padj value) and absolute value of lfc above set lfc cutoff
   filtering_criteria <- which(
     !is.na(res$padj) &
       res$padj < padj_cutoff &
@@ -410,8 +410,8 @@ gene_list_DKO <- get_all_sig_genes(res_DKO)
 gene_list_DKOvsWT_case <- get_all_sig_genes(res_DKOvsWT_case)
 
 gene_list_DKOvsWT_control <- get_all_sig_genes(res_DKOvsWT_control)
-# set universe list (ensemble of all genes), cf. summary(res)
 
+# set universe list (ensemble of all genes), cf. summary(res)
 universe_WT <- rownames(res_WT)[which(!is.na(res_WT$padj))]
 
 universe_DKO <- rownames(res_DKO)[which(!is.na(res_DKO$padj))]
@@ -470,63 +470,6 @@ ego_DKOvsWT_control <- enrichGO(
 )
 
 head(ego_DKOvsWT_control, 3)
-
-#-----------------------------------------------------------------------
-# EnrichGO's bar plots
-#-----------------------------------------------------------------------
-
-# WT case vs control comparison bar plot
-png(
-  filename = "./results/R_plots/barplot_enrichGO_WT.png",
-  width = 3000,
-  height = 2400,
-  res = 300
-)
-barplot(ego_WT, x = "Count") +
-  ggtitle(
-    "Enriched terms bar plot",
-    "In WT: case vs control comparison"
-  )
-dev.off()
-
-# DKO case vs control comparison bar plot
-png(
-  filename = "./results/R_plots/barplot_enrichGO_DKO.png",
-  width = 3000,
-  height = 2400,
-  res = 300
-)
-barplot(ego_DKO, x = "Count") +
-  ggtitle("Enriched terms bar plot", "In DKO: case vs control comparison")
-dev.off()
-
-# Case DKO vs WT comparison bar plot
-png(
-  filename = "./results/R_plots/barplot_enrichGO_DKOvsWT_case.png",
-  width = 3000,
-  height = 2400,
-  res = 300
-)
-barplot(ego_DKOvsWT_case, x = "Count") +
-  ggtitle(
-    "Enriched terms bar plot",
-    "In Case condition: DKO vs WT comparison"
-  )
-dev.off()
-
-# Control DKO vs WT comparison bar plot
-png(
-  filename = "./results/R_plots/barplot_enrichGO_DKOvsWT_control.png",
-  width = 3000,
-  height = 2400,
-  res = 300
-)
-barplot(ego_DKOvsWT_control, x = "Count") +
-  ggtitle(
-    "Enriched terms bar plot",
-    "In Control condition: DKO vs WT comparison"
-  )
-dev.off()
 
 #-----------------------------------------------------------------------
 # EnrichGO's dot plots
