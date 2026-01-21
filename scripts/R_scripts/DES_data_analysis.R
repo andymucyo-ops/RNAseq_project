@@ -18,7 +18,7 @@ setwd("~/Projects/R/RNAseq_project/")
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 # set file path
-sample_counts_path <- "~/Projects/R/RNAseq_project/data/count.txt"
+sample_counts_path <- "./data/count.txt"
 
 # save the feature count file as a table
 counts <- read.table(sample_counts_path, header = TRUE)
@@ -33,7 +33,7 @@ head(counts)
 
 # Create a sample_info data frame containing the Data information according to README in reads_Blood, acting as the metadata of the counts
 
-sample_info_path <- "~/Projects/R/RNAseq_project/data/sample_info.txt"
+sample_info_path <- "./data/sample_info.txt"
 
 sample_info <- read.table(sample_info_path, header = TRUE)
 
