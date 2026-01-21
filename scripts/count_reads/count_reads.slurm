@@ -14,7 +14,7 @@
 input_files="/data/users/ankunzimana/RNAseq_project/results/alignment/bam/*sorted.bam"
 annotation_file="/data/users/ankunzimana/RNAseq_project/data/reference_genome/Mus_musculus.GRCm39.115.gtf"
 container="/containers/apptainer/subread_2.0.6.sif"
-output_dir="/data/users/ankunzimana/RNAseq_project/results/count_reads"
+output_dir="/data/users/ankunzimana/RNAseq_project/results/count_reads.txt"
 
 echo "${input_dir}"
 
@@ -26,7 +26,8 @@ apptainer exec ${container} featureCounts -p --countReadPairs\
     -T $SLURM_CPUS_PER_TASK \
     -s 2
 
-sed -E -i 's#[^[:space:]]*/(SRR[0-9]+)\.sorted\.bam#\1#g'
-
+sed -E -i 's#[^[:space:]]*/(SRR[0-9]+)\.sorted\.bam#\1#g' ${output_dir}/counts.txt
+tail -n +2 counts.txt | cut -f 1,7-21 > ${output_dir}"/counts.txt"
+sed -E -i 's#[^[:space:]]*/(SRR[0-9]+)\.sorted\.bam#\1#g' ${output_dir}/counts.txt.summary
 
 
