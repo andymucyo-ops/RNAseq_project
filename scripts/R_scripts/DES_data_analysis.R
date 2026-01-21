@@ -47,6 +47,9 @@ rownames(sample_info) <- sample_info$Sample
 sample_info$Sample <- NULL
 head(sample_info)
 
+# change Group data type to fit requirement for DESeq analysis
+sample_info$Group <- as.factor(sample_info$Group)
+
 # final check before launching DESeq (Must return TRUE to perform DESeq analysis!)
 all(rownames(sample_info) == colnames(counts))
 
@@ -76,7 +79,7 @@ dds <- DESeq(dds)
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 
-# extraction of transformed values (corrected counts) of counts into new matrix to nromalize counts and compare them
+# extraction of vst transformed values (corrected counts) of counts into new matrix to nromalize counts and compare them
 vsd <- vst(dds, blind = FALSE)
 
 
@@ -97,7 +100,7 @@ plotPCA(
 dev.off()
 
 #------------------------------------------------------------------------
-# get results comparison with 4 different methods
+# get results comparison with 4 different methods and store them as tables
 # -----------------------------------------------------------------------
 #Highlight differences of expression between case and control condition in WT genotype
 res_WT <- results(
@@ -108,6 +111,12 @@ res_WT <- results(
     "Blood_WT_Control"
   ),
   alpha = 0.05
+)
+
+write.csv(
+  as.data.frame(res_WT[order(res_WT$padj), ]),
+  file = "./results/tables/DEG_WT_CaseVsControl.csv",
+  row.names = TRUE
 )
 
 # highlight of the difference of expression between case and control condition in DKO genotype
@@ -121,6 +130,12 @@ res_DKO <- results(
   alpha = 0.05
 )
 
+write.csv(
+  as.data.frame(res_DKO[order(res_DKO$padj), ]),
+  file = "./results/tables/DEG_DKO_CaseVsControl.csv",
+  row.names = TRUE
+)
+
 # highlight the difference of expression in control condition between WT and DKO in Case condition
 res_DKOvsWT_case <- results(
   dds,
@@ -130,6 +145,12 @@ res_DKOvsWT_case <- results(
     "Blood_WT_Case"
   ),
   alpha = 0.05
+)
+
+write.csv(
+  as.data.frame(res_DKOvsWT_case[order(res_DKOvsWT_case$padj), ]),
+  file = "./results/tables/DEG_DKOvsWT_case.csv",
+  row.names = TRUE
 )
 
 # highlight the difference of expression in control condition between WT and DKO in control condition
@@ -143,19 +164,44 @@ res_DKOvsWT_control <- results(
   alpha = 0.05
 )
 
-# get summary of the result data output for each comparison method
-summary_WT <- summary(res_WT)
-summary_DKO <- summary(res_DKO)
-summary_DKOvsWT_case <- summary(res_DKOvsWT_case)
-summary_DKOvsWT_control <- summary(res_DKOvsWT_control)
+write.csv(
+  as.data.frame(res_DKOvsWT_control[order(res_DKOvsWT_control$padj), ]),
+  file = "./results/tables/DEG_DKOvsWT_control.csv",
+  row.names = TRUE
+)
+
+# store summary of differentialy expressed genes for each result method
+deg_summary <- data.frame(
+  Comparison = c(
+    "WT_CaseVsControl",
+    "DKO_CaseVsControl",
+    "DKOvsWT_Case",
+    "DKOvsWT_Control"
+  ),
+  Total_DEGs = c(
+    sum(res_WT$padj < 0.05 & abs(res_WT$log2FoldChange) > 1, na.rm = TRUE),
+    sum(res_DKO$padj < 0.05 & abs(res_DKO$log2FoldChange) > 1, na.rm = TRUE),
+    sum(
+      res_DKOvsWT_case$padj < 0.05 & abs(res_DKOvsWT_case$log2FoldChange) > 1,
+      na.rm = TRUE
+    ),
+    sum(
+      res_DKOvsWT_control$padj < 0.05 &
+        abs(res_DKOvsWT_control$log2FoldChange) > 1,
+      na.rm = TRUE
+    )
+  )
+)
+write.csv(deg_summary, "./results/tables/DEG_summary.csv", row.names = FALSE)
 
 
 #Create function to retrieve top 50 genes for each result sets
-get_top_genes <- function(res) {
+get_top_genes <- function(res, padj_cutoff = 0.05, lfc_cutoff = 1, n = 50) {
   #set filtering criteria for the results with padj defined and absolute value of log2FoldChange > 1
   filtering_criteria <- which(
     !is.na(res$padj) &
-      abs(res$log2FoldChange) > 1
+      res$padj < padj_cutoff &
+      abs(res$log2FoldChange) > lfc_cutoff
   )
 
   # get significant genes order by padj value
@@ -163,7 +209,7 @@ get_top_genes <- function(res) {
     filtering_criteria
   ])]
 
-  top50_genes <- sig_genes[1:50]
+  top50_genes <- sig_genes[1:n]
 
   return(top50_genes)
 }
@@ -324,7 +370,7 @@ png(
 )
 
 EnhancedVolcano(
-  res_DKOvsWT_case,
+  res_DKOvsWT_control,
   lab = rownames(res_DKOvsWT_control),
   x = 'log2FoldChange',
   y = 'padj',
@@ -340,14 +386,30 @@ dev.off()
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 
+# Create function to retrieve all significant genes for each result
+get_all_sig_genes <- function(res, padj_cutoff = 0.05, lfc_cutoff = 1) {
+  #set filtering criteria for the results with padj defined and absolute value of log2FoldChange > 1
+  filtering_criteria <- which(
+    !is.na(res$padj) &
+      res$padj < padj_cutoff &
+      abs(res$log2FoldChange) > lfc_cutoff
+  )
+
+  # get significant genes order by padj value
+  sig_genes <- rownames(res)[filtering_criteria]
+
+  return(sig_genes)
+}
+
+
 # save gene list of differentialy expressed genes, for each results data
-gene_list_WT <- top50_WT
+gene_list_WT <- get_all_sig_genes(res_WT)
 
-gene_list_DKO <- top50_DKO
+gene_list_DKO <- get_all_sig_genes(res_DKO)
 
-gene_list_DKOvsWT_case <- top50_DKOvsWT_case
+gene_list_DKOvsWT_case <- get_all_sig_genes(res_DKOvsWT_case)
 
-gene_list_DKOvsWT_control <- top50_DKOvsWT_control
+gene_list_DKOvsWT_control <- get_all_sig_genes(res_DKOvsWT_control)
 # set universe list (ensemble of all genes), cf. summary(res)
 
 universe_WT <- rownames(res_WT)[which(!is.na(res_WT$padj))]
@@ -363,7 +425,7 @@ universe_DKOvsWT_control <- rownames(res_DKOvsWT_control)[which(
 )]
 
 
-# create enrivhGO (ego) object for each result
+# create enrichGO (ego) object for each result
 
 ego_WT <- enrichGO(
   gene = gene_list_WT,
@@ -410,7 +472,7 @@ ego_DKOvsWT_control <- enrichGO(
 head(ego_DKOvsWT_control, 3)
 
 #-----------------------------------------------------------------------
-# ego's bar plots
+# EnrichGO's bar plots
 #-----------------------------------------------------------------------
 
 # WT case vs control comparison bar plot
@@ -464,4 +526,52 @@ barplot(ego_DKOvsWT_control, x = "Count") +
     "Enriched terms bar plot",
     "In Control condition: DKO vs WT comparison"
   )
+dev.off()
+
+#-----------------------------------------------------------------------
+# EnrichGO's dot plots
+#-----------------------------------------------------------------------
+
+# WT case vs control comparison bar plot
+png(
+  "./results/R_plots/dotplot_enrichGO_WT.png",
+  width = 3000,
+  height = 2400,
+  res = 300
+)
+dotplot(ego_WT, showCategory = 10) +
+  ggtitle("GO Enrichment - WT: Case vs Control")
+dev.off()
+
+# DKO case vs control comparison bar plot
+png(
+  "./results/R_plots/dotplot_enrichGO_DKO.png",
+  width = 3000,
+  height = 2400,
+  res = 300
+)
+dotplot(ego_DKO, showCategory = 10) +
+  ggtitle("GO Enrichment - DKO: Case vs Control")
+dev.off()
+
+# Case DKO vs WT comparison bar plot
+png(
+  "./results/R_plots/dotplot_enrichGO_DKOvsWT_case.png",
+  width = 3000,
+  height = 2400,
+  res = 300
+)
+dotplot(ego_DKOvsWT_case, showCategory = 10) +
+  ggtitle("GO Enrichment - Case: DKO vs WT")
+dev.off()
+
+# Control DKO vs WT comparison bar plot
+png(
+  "./results/R_plots/dotplot_enrichGO_DKOvsWT_control.png",
+  width = 3000,
+  height = 2400,
+  res = 300
+)
+dotplot(ego_DKOvsWT_control, showCategory = 10) +
+  ggtitle("GO Enrichment - Control: DKO vs WT")
 dev.off()
