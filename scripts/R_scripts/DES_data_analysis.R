@@ -66,10 +66,6 @@ dds <- DESeqDataSetFromMatrix(
   design = ~Group
 )
 
-# change Group data type to match expected type in DESeq() function
-dds$Group <- as.factor(dds$Group)
-
-
 # run differential expression analysis
 dds <- DESeq(dds)
 
@@ -223,19 +219,19 @@ get_top_genes <- function(res, padj_cutoff = 0.05, lfc_cutoff = 1, n = 50) {
 #-----------------------------------------------------------------------
 #get to 50 genes for each comparison
 #-----------------------------------------------------------------------
-top50_WT <- get_top_genes(res_WT)
+top_genes_WT <- get_top_genes(res_WT)
 
-top50_DKO <- get_top_genes(res_DKO)
+top_genes_DKO <- get_top_genes(res_DKO)
 
-top50_DKOvsWT_case <- get_top_genes(res_DKOvsWT_case)
+top_genes_DKOvsWT_case <- get_top_genes(res_DKOvsWT_case)
 
-top50_DKOvsWT_control <- get_top_genes(res_DKOvsWT_control)
+top_genes_DKOvsWT_control <- get_top_genes(res_DKOvsWT_control)
 
 # extract the corrected count matrix matching the top 50 genes for each results highlight
-mat_WT <- assay(vsd)[top50_WT, ]
-mat_DKO <- assay(vsd)[top50_DKO, ]
-mat_DKOvsWT_case <- assay(vsd)[top50_DKOvsWT_case, ]
-mat_DKOvsWT_control <- assay(vsd)[top50_DKOvsWT_control, ]
+mat_WT <- assay(vsd)[top_genes_WT, ]
+mat_DKO <- assay(vsd)[top_genes_DKO, ]
+mat_DKOvsWT_case <- assay(vsd)[top_genes_DKOvsWT_case, ]
+mat_DKOvsWT_control <- assay(vsd)[top_genes_DKOvsWT_control, ]
 
 #---------------------------------------------------------------------
 # heatmap for different highlighted result data frame
