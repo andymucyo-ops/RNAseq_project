@@ -24,18 +24,15 @@
 *.rds
 *.html
 *.pdf
+*.png
 *.tmp
 *.summary
 *.json
 *.Rproj
-results/
-figure/
+results/alignment
+results/count_reads
 DESeq_data_analysis.md 
 # --- envs and dependencies ---
-.venv/
-env/
-__pycache__/
-*.pyc
 .DS_Store
 .Rproj.user/
 .Renviron
