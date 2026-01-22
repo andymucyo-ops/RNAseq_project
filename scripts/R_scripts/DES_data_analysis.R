@@ -73,6 +73,11 @@ dds <- DESeq(dds)
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 
+#create output directories
+dir.create("./results/R_plots", recursive = TRUE, showWarnings = FALSE)
+dir.create("./results/tables", recursive = TRUE, showWarnings = FALSE)
+
+
 # extraction of vst transformed values (corrected counts) of counts into new matrix to nromalize counts and compare them
 vsd <- vst(dds, blind = FALSE)
 
@@ -434,7 +439,6 @@ ego_WT <- enrichGO(
   readable = TRUE
 )
 
-head(ego_WT, 3)
 
 ego_DKO <- enrichGO(
   gene = gene_list_DKO,
@@ -445,7 +449,6 @@ ego_DKO <- enrichGO(
   readable = TRUE
 )
 
-head(ego_DKO, 3)
 
 ego_DKOvsWT_case <- enrichGO(
   gene = gene_list_DKOvsWT_case,
@@ -456,7 +459,6 @@ ego_DKOvsWT_case <- enrichGO(
   readable = TRUE
 )
 
-head(ego_DKOvsWT_case, 3)
 
 ego_DKOvsWT_control <- enrichGO(
   gene = gene_list_DKOvsWT_control,
@@ -467,7 +469,48 @@ ego_DKOvsWT_control <- enrichGO(
   readable = TRUE
 )
 
-head(ego_DKOvsWT_control, 3)
+#-----------------------------------------------------------------------
+# save GO Enrichment results
+#-----------------------------------------------------------------------
+
+#function to save GO results
+save_go_results <- function(ego_obj, filename_prefix, top_n = 15) {
+  #tranform EnrichGO object to data frame
+  go_df <- as.data.frame(ego_obj)
+
+  #complete GO results file
+  write.csv(
+    go_df,
+    file = paste0(
+      "./results/tables/",
+      filename_prefix,
+      "_GO_complete.csv"
+    ),
+    row.names = FALSE
+  )
+
+  #top n results
+  top_go <- head(go_df, top_n)
+  write.csv(
+    top_go,
+    file = paste0(
+      "./results/tables/",
+      filename_prefix,
+      "_GO_top",
+      top_n,
+      ".csv"
+    ),
+    row.names = FALSE
+  )
+}
+
+
+#save for each comparison
+save_go_results(ego_WT, "WT_CaseVsControl")
+save_go_results(ego_DKO, "DKO_CaseVsControl")
+save_go_results(ego_DKOvsWT_case, "DKOvsWT_Case")
+save_go_results(ego_DKOvsWT_control, "DKOvsWT_Control")
+
 
 #-----------------------------------------------------------------------
 # EnrichGO's dot plots
