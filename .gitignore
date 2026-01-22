@@ -13,7 +13,7 @@
 *.tgz
 *.ht2
 *.sa
-# --- resuls, output and logs ---
+# --- results, output and logs ---
 *.csv
 *.txt
 *.tsv
@@ -29,6 +29,7 @@
 *.summary
 *.json
 *.Rproj
+report/
 results/alignment
 results/count_reads
 DESeq_data_analysis.md 
