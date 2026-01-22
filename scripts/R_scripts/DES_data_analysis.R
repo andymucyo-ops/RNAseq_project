@@ -9,8 +9,6 @@ library("EnhancedVolcano")
 library("org.Mm.eg.db")
 library("enrichplot")
 
-#set wroking directory
-setwd("~/Projects/R/RNAseq_project/")
 
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
