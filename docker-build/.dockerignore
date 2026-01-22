@@ -1,0 +1,5 @@
+
+# ignore all except Dockerfile and environment.yml
+*
+!Dockerfile
+!environment.yml
