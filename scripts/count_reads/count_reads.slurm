@@ -27,7 +27,7 @@ apptainer exec ${container} featureCounts -p --countReadPairs\
     -s 2
 
 sed -E -i 's#[^[:space:]]*/(SRR[0-9]+)\.sorted\.bam#\1#g' ${output_dir}/counts.txt
-tail -n +2 counts.txt | cut -f 1,7-21 > ${output_dir}"/counts.txt"
+tail -n +2 ${output_dir}/counts.txt | cut -f 1,7-21 > ${output_dir}"/counts.txt"
 sed -E -i 's#[^[:space:]]*/(SRR[0-9]+)\.sorted\.bam#\1#g' ${output_dir}/counts.txt.summary
 
 
