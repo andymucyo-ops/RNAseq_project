@@ -1,13 +1,13 @@
 #load libraries
 
-library("DESeq2")
-library("clusterProfiler")
-library("pheatmap")
-library("ggplot2")
-library("ggrepel")
-library("EnhancedVolcano")
-library("org.Mm.eg.db")
-library("enrichplot")
+library("DESeq2", quietly = TRUE)
+library("clusterProfiler", quietly = TRUE)
+library("pheatmap", quietly = TRUE)
+library("ggplot2", quietly = TRUE)
+library("ggrepel", quietly = TRUE)
+library("EnhancedVolcano", quietly = TRUE)
+library("org.Mm.eg.db", quietly = TRUE)
+library("enrichplot", quietly = TRUE)
 
 
 #------------------------------------------------------------------------
@@ -182,6 +182,7 @@ deg_summary <- data.frame(
     "DKOvsWT_Case",
     "DKOvsWT_Control"
   ),
+
   Total_DEGs = c(
     sum(res_WT$padj < 0.05 & abs(res_WT$log2FoldChange) > 1, na.rm = TRUE),
     sum(res_DKO$padj < 0.05 & abs(res_DKO$log2FoldChange) > 1, na.rm = TRUE),
@@ -192,6 +193,34 @@ deg_summary <- data.frame(
     sum(
       res_DKOvsWT_control$padj < 0.05 &
         abs(res_DKOvsWT_control$log2FoldChange) > 1,
+      na.rm = TRUE
+    )
+  ),
+
+  Up_regulated = c(
+    sum(res_WT$padj < 0.05 & res_WT$log2FoldChange > 1, na.rm = TRUE),
+    sum(res_DKO$padj < 0.05 & res_DKO$log2FoldChange > 1, na.rm = TRUE),
+    sum(
+      res_DKOvsWT_case$padj < 0.05 & res_DKOvsWT_case$log2FoldChange > 1,
+      na.rm = TRUE
+    ),
+    sum(
+      res_DKOvsWT_control$padj < 0.05 &
+        res_DKOvsWT_control$log2FoldChange > 1,
+      na.rm = TRUE
+    )
+  ),
+
+  Down_regulated = c(
+    sum(res_WT$padj < 0.05 & res_WT$log2FoldChange < -1, na.rm = TRUE),
+    sum(res_DKO$padj < 0.05 & res_DKO$log2FoldChange < -1, na.rm = TRUE),
+    sum(
+      res_DKOvsWT_case$padj < 0.05 & res_DKOvsWT_case$log2FoldChange < -1,
+      na.rm = TRUE
+    ),
+    sum(
+      res_DKOvsWT_control$padj < 0.05 &
+        res_DKOvsWT_control$log2FoldChange < -1,
       na.rm = TRUE
     )
   )
@@ -274,7 +303,7 @@ pheatmap(
 pheatmap(
   mat_DKOvsWT_case,
   scale = "row",
-  main = "DKO vs WT in case condition",
+  main = "DKO vs WT genotype comparison in case condition",
   annotation_col = data.frame(
     Group = colData(dds)$Group,
     row.names = colnames(mat_DKOvsWT_case)
@@ -290,7 +319,7 @@ pheatmap(
 pheatmap(
   mat_DKOvsWT_control,
   scale = "row",
-  main = "DKO vs WT in control condition",
+  main = "DKO vs WT genotype comparison in control condition",
   annotation_col = data.frame(
     Group = colData(dds)$Group,
     row.names = colnames(mat_DKOvsWT_control)
