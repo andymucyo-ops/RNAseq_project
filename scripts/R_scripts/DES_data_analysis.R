@@ -588,3 +588,148 @@ png(
 dotplot(ego_DKOvsWT_control, showCategory = 10) +
   ggtitle("GO Enrichment - Control: DKO vs WT")
 dev.off()
+
+
+#------------------------------------------------------------------------
+# IFN Module gene lists (Singhania et al.)
+#------------------------------------------------------------------------
+
+symbols_B11 <- c(
+  "Gbp2",
+  "Gbp3",
+  "Gbp4",
+  "Gbp5",
+  "Gbp6",
+  "Gbp7",
+  "Gbp8",
+  "Gbp9",
+  "Gbp10",
+  "Gbp11",
+  "Ido1",
+  "Il10",
+  "Oas1a",
+  "Oas1g"
+)
+
+symbols_B14 <- c(
+  "Ifng",
+  "Gbp2",
+  "Gbp3",
+  "Gbp4",
+  "Gbp5",
+  "Gbp6",
+  "Gbp7",
+  "Gbp8",
+  "Gbp9",
+  "Gbp10",
+  "Gbp11",
+  "H2-K1",
+  "H2-D1",
+  "H2-Q7",
+  "H2-T23",
+  "Ifit1",
+  "Ifit2",
+  "Ifit3",
+  "Irf1",
+  "Irf7",
+  "Irgm1",
+  "Irgm2",
+  "Mx1",
+  "Oas3",
+  "Oasl1",
+  "Oasl2",
+  "Stat1",
+  "Stat2",
+  "Tap1",
+  "Tap2"
+)
+
+#------------------------------------------------------------------------
+# Convert gene symbols to ENSEMBL IDs
+#------------------------------------------------------------------------
+
+bitr_B11 <- bitr(
+  symbols_B11,
+  fromType = "SYMBOL",
+  toType = "ENSEMBL",
+  OrgDb = org.Mm.eg.db
+)
+
+bitr_B14 <- bitr(
+  symbols_B14,
+  fromType = "SYMBOL",
+  toType = "ENSEMBL",
+  OrgDb = org.Mm.eg.db
+)
+
+# Create lookup vectors (ENSEMBL -> SYMBOL)
+symbol_lookup_B11 <- setNames(bitr_B11$SYMBOL, bitr_B11$ENSEMBL)
+symbol_lookup_B14 <- setNames(bitr_B14$SYMBOL, bitr_B14$ENSEMBL)
+
+# Filter to genes present in VST matrix
+ensembl_B11 <- bitr_B11$ENSEMBL[bitr_B11$ENSEMBL %in% rownames(assay(vsd))]
+ensembl_B14 <- bitr_B14$ENSEMBL[bitr_B14$ENSEMBL %in% rownames(assay(vsd))]
+
+message(paste0(
+  "B11: ",
+  length(ensembl_B11),
+  "/",
+  nrow(bitr_B11),
+  " genes found in data"
+))
+message(paste0(
+  "B14: ",
+  length(ensembl_B14),
+  "/",
+  nrow(bitr_B14),
+  " genes found in data"
+))
+
+#------------------------------------------------------------------------
+# Extract VST matrices for each module
+#------------------------------------------------------------------------
+
+vst_B11_matrix <- assay(vsd)[ensembl_B11, ]
+vst_B14_matrix <- assay(vsd)[ensembl_B14, ]
+
+# Replace ENSEMBL IDs with gene symbols for readability
+rownames(vst_B11_matrix) <- symbol_lookup_B11[rownames(vst_B11_matrix)]
+rownames(vst_B14_matrix) <- symbol_lookup_B14[rownames(vst_B14_matrix)]
+
+#------------------------------------------------------------------------
+# Create module heatmaps
+#------------------------------------------------------------------------
+
+# B11 module heatmap
+pheatmap(
+  vst_B11_matrix,
+  scale = "row",
+  main = "B11 module gene expression patterns across samples",
+  annotation_col = data.frame(
+    Group = colData(dds)$Group,
+    row.names = colnames(vst_B11_matrix)
+  ),
+  show_rownames = TRUE,
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  fontsize = 10,
+  fontsize_row = 8,
+  filename = "./results/R_plots/heatmap_B11_module.png"
+)
+
+# B14 module heatmap
+pheatmap(
+  vst_B14_matrix,
+  scale = "row",
+  main = "B14 module gene expression patterns across samples",
+  annotation_col = data.frame(
+    Group = colData(dds)$Group,
+    row.names = colnames(vst_B14_matrix)
+  ),
+  show_rownames = TRUE,
+  cluster_rows = TRUE,
+  cluster_cols = TRUE,
+  fontsize = 10,
+  fontsize_row = 8,
+  filename = "./results/R_plots/heatmap_B14_module.png"
+)
