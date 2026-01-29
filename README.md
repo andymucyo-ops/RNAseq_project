@@ -1,10 +1,16 @@
 # RNAseq FS 2025
 
+## PART 1.
+
+This part has been conducted on the IBU cluster, where data have been retrieved from and all the following scripts have been run, to asses reads quality, map them to the reference genome and count the reads obtain to produce the inputs for the Differential expression analysis in R.
+
+
+
 The data used for this project were retireved from the following repository 
 
     /data/courses/rnaseq_course/toxoplasma_de/reads_Blood
 
-## 1) Quality Check of the data
+### 1) Quality Check of the data
 
 A frist script has been run to run the fastqc tool on all raw data
 
@@ -14,7 +20,7 @@ Then a second scirpt using multiqc for applied on the fastqc output for better v
     
     sbatch ./scripts/QC/run_multiqc.slurm
 
-## 2) MAP reads to the reference genome
+### 2) MAP reads to the reference genome
 
 The reference genome and associated annotations were downloaded form the following website: https://www.ensembl.org/info/data/ftp/index.html 
 Using the following commands: 
@@ -48,28 +54,34 @@ that will run the `bash samtools.slurm` on the .sam files. This scripts consits 
     2) sorting the .bam files 
     3) indexing the sorted .bam files
 
-## 3) Read counting
+### 3) Read counting
 
 run the following script ont the sorted bam files:
 
     sbatch scripts/count_reads/count_reads.slurm
     
-## 4) Differential expression analysis 
+### 4) Differential expression analysis 
 
-### Step 1) reformat the data as expected by DESeq2 befor importing to R
-  
-  apply the following command on the featurecount output file to create a new file, without the first line and the unwanted column
+first clone the repo on your local machine in a repo of your choice `git clone https://github.com/andymucyo-ops/RNAseq_project`
 
-    tail -n +2 corrected_count.txt | cut -f 1,7-21 > count.txt
+and enter directory `cd RNAseq_project`
 
+Then the analysis can be run in two ways:
 
-### Step 2) Differential expression analysis & Data visualization
-  
-  The whole data treatment and analysis have been displayed in the following script 
+#### 1) Miniconda environment + R Studio
+- first install miniforge (conda/mamba installer) following the steps on official [Mamba documentation](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html)
+
+- Then, create conda environment from `docker-build/environment.yml`, and activate it with the following commands:
     
-    DES_data_analysis.R 
+    `mamba create -f docker-build/environment.yml`
+    `conda activate rnaseq-r`
+- once the environment is activated you can open R Studio and execute the DES_data_analysis.R script
+- ⚠️ When using R Studio make sure that it is using R from rnaser-r environment, run the following command in R Studio console: `R.home()` 
 
+#### 2) Docker container
 
+- pull docker image: `docker pull andymucyo/rnaseq_r:1.0`
 
+- then run the following command from the project root (RNAseq_project/): `docker run --rm -v $(pwd):/project -w /project andymucyo/rnaseq_r:1.0 Rscript scripts/R_scripts/DES_data_analysis.R`)
 
-
+- outputs will be found in RNAseq_project/results/R_plots and RNAseq_project/results/tables 
