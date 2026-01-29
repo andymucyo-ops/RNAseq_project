@@ -69,14 +69,15 @@ and enter directory `cd RNAseq_project`
 
 Then the analysis can be run in two ways:
 
-#### 1) Miniconda environment + R Studio
+#### 1) conda environment + R Studio
 - first install miniforge (conda/mamba installer) following the steps on official [Mamba documentation](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html)
 
 - Then, create conda environment from `docker-build/environment.yml`, and activate it with the following commands:
     
     ```{bash}
     (mamba create -f docker-build/environment.yml)
-
+    ```
+    ```{bash}
     conda activate rnaseq-r
     ```
     
