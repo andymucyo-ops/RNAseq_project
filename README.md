@@ -63,7 +63,10 @@ run the following script ont the sorted bam files:
 
 ### 4) Differential expression analysis 
 
-first clone the repo on your local machine in a repo of your choice `git clone https://github.com/andymucyo-ops/RNAseq_project`
+first clone the repo on your local machine in a repo of your choice 
+```{bash}
+git clone https://github.com/andymucyo-ops/RNAseq_project
+```
 
 and enter directory `cd RNAseq_project`
 
