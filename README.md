@@ -26,13 +26,20 @@ Using the following commands:
 
 For reference genome: 
 
-    wget ftp://ftp.ensembl.org/pub/release-115/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna_sm.primary_assembly.fa.gz ./data/reference_genome
+    wget https://ftp.ensembl.org/pub/release-115/fasta/mus_musculus/dna/Mus_musculus.GRCm39.dna_sm.primary_assembly.fa.gz ./data/reference_genome
 
 For associated annotaions:
 
-    wget ftp://ftp.ensembl.org/pub/release-115/gtf/mus_musculus/Mus_musculus.GRCm39.115.gtf.gz ./data/reference_genome
+    wget https://ftp.ensembl.org/pub/release-115/gtf/mus_musculus/Mus_musculus.GRCm39.115.gtf.gz ./data/reference_genome
 
-The reference genome is then unziped with `bash gzip -d ./data/reference_genome/Mus_musculus.GRCm39.dna_sm.primary_assembly.fa.gz` and the name is then changed to `bash mv ./data/reference_genome/Mus_musculus.GRCm39.dna_sm.primary_assembly.fa ./data/reference_genome/genome.fa`
+The reference genome is then unziped with 
+```{bash}
+gzip -d ./data/reference_genome/Mus_musculus.GRCm39.dna_sm.primary_assembly.fa.gz
+```
+and the name is then changed to 
+```{bash} 
+mv ./data/reference_genome/Mus_musculus.GRCm39.dna_sm.primary_assembly.fa ./data/reference_genome/genome.fa
+```
 
 Then run the following script to produce the indexes for mapping:
 
@@ -42,13 +49,13 @@ to obtain the sam file for the aligement run:
 
     ./scripts/alignment/mapping.sh
 
-that will run the `bash mapping.slurm` script on every raw fastq data file
+that will run the `mapping.slurm` script on every raw fastq data file
 
 Finally run 
 
     ./scripts/alignment/samtools.sh
 
-that will run the `bash samtools.slurm` on the .sam files. This scripts consits of three actions 
+that will run the `samtools.slurm` on the .sam files. This scripts consits of three actions 
     1) conversion of .sam file, to .bam file (compresssed form containing the informations)
     2) sorting the .bam files 
     3) indexing the sorted .bam files
