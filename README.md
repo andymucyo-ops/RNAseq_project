@@ -19,7 +19,7 @@ This part has been conducted on the IBU cluster, where data have been retrieved 
 The data used for this project were retireved from the following repository on the IBU cluster 
     
     /data/courses/rnaseq_course/toxoplasma_de/reads_Blood
-
+But can also be fond on the Gene Expression Omnibus, with the accession number GSE119855 ([GEO link](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE119855)) 
 ### 1) Quality Check of the data
 
 A frist script has been run to run the fastqc tool on all raw data
