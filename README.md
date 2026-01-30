@@ -73,13 +73,13 @@ that will run the `samtools.slurm` on the .sam files. This scripts consits of th
 
 ### 3) Read counting
 
-run the following script ont the sorted bam files:
+run the following script on the sorted bam files:
 
     sbatch scripts/count_reads/count_reads.slurm
 
 ## PART 2.
 
-- This part is conducted on your local machine, for that you'll need to clone this repo 
+This part is conducted on your local machine, for that you'll need to clone this repo 
 
 ```{bash}
 git clone https://github.com/andymucyo-ops/RNAseq_project
@@ -87,7 +87,7 @@ git clone https://github.com/andymucyo-ops/RNAseq_project
 
 - The requirment to conduct the analysis are listed in the [environment.yml file](./docker-build/environment.yml)
 
-- Other requirments are either Mamba (installed using miniforge or miniconda) or Docker installed on your local machine
+- Other requirments are either Mamba (installed using miniforge or miniconda) or Docker, installed on your local machine
 
 ### 4) Differential expression analysis 
 
@@ -106,7 +106,7 @@ Then the analysis can be run in two ways:
 - Then, create conda environment from `docker-build/environment.yml`, and activate it with the following commands:
     
     ```{bash}
-    (mamba env create -f docker-build/environment.yml)
+    mamba env create -f docker-build/environment.yml
     ```
     ```{bash}
     conda activate rnaseq-r
