@@ -1,11 +1,22 @@
 # RNAseq FS 2025
 
+This project analyzes RNA-seq data from mouse blood samples infected with Toxoplasma gondii to identify differentially expressed genes (DEGs) between wild-type (WT) and double-knockout (DKO) genotypes under case (infected) and control (uninfected) conditions. The workflow includes quality control, read alignment, quantification, and comprehensive differential expression analysis using DESeq2, followed by Gene Ontology enrichment analysis and interferon module profiling.
+
 ## PART 1.
 
 This part has been conducted on the IBU cluster, where data have been retrieved from and all the following scripts have been run, to asses reads quality, map them to the reference genome and count the reads obtain to produce the inputs for the Differential expression analysis in R.
 
 
-The data used for this project were retireved from the following repository 
+| Tool | Description | Documentation |
+|------|-------------|---------------|
+| FastQC | Quality control for raw sequencing reads | [FastQC Documentation](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) |
+| MultiQC | Aggregate QC reports across samples | [MultiQC Documentation](https://multiqc.info/) |
+| HISAT2 | Spliced alignment of RNA-seq reads | [HISAT2 Manual](http://daehwankimlab.github.io/hisat2/) |
+| Samtools | SAM/BAM file manipulation and sorting | [Samtools Documentation](http://www.htslib.org/doc/samtools.html) |
+| featureCounts | Read quantification at gene level | [featureCounts Documentation](https://subread.sourceforge.net/) |
+
+
+The data used for this project were retireved from the following repository on the IBU cluster 
     
     /data/courses/rnaseq_course/toxoplasma_de/reads_Blood
 
@@ -68,6 +79,9 @@ run the following script ont the sorted bam files:
 
 ## PART 2.
 
+- The requirment to conduct the analysis are listed in the [environment.yml file](./docker-build/environment.yml)
+
+- Other requirments are either Mamba (installed using miniforge or miniconda) or Docker installed on your local machine
 ### 4) Differential expression analysis 
 
 first clone the repo on your local machine in a repo of your choice 
