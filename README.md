@@ -67,9 +67,9 @@ Finally run
     ./scripts/alignment/samtools.sh
 
 that will run the `samtools.slurm` on the .sam files. This scripts consits of three actions 
-    1) conversion of .sam file, to .bam file (compresssed form containing the informations)
-    2) sorting the .bam files 
-    3) indexing the sorted .bam files
+- 1) conversion of .sam file, to .bam file (compresssed form containing the informations)
+- 2) sorting the .bam files 
+- 3) indexing the sorted .bam files
 
 ### 3) Read counting
 
@@ -79,12 +79,19 @@ run the following script ont the sorted bam files:
 
 ## PART 2.
 
+- This part is conducted on your local machine, for that you'll need to clone this repo 
+
+```{bash}
+git clone https://github.com/andymucyo-ops/RNAseq_project
+```
+
 - The requirment to conduct the analysis are listed in the [environment.yml file](./docker-build/environment.yml)
 
 - Other requirments are either Mamba (installed using miniforge or miniconda) or Docker installed on your local machine
+
 ### 4) Differential expression analysis 
 
-first clone the repo on your local machine in a repo of your choice 
+- first clone the repo on your local machine in a repo of your choice 
 ```{bash}
 git clone https://github.com/andymucyo-ops/RNAseq_project
 ```
@@ -99,7 +106,7 @@ Then the analysis can be run in two ways:
 - Then, create conda environment from `docker-build/environment.yml`, and activate it with the following commands:
     
     ```{bash}
-    (mamba create -f docker-build/environment.yml)
+    (mamba env create -f docker-build/environment.yml)
     ```
     ```{bash}
     conda activate rnaseq-r
@@ -120,4 +127,19 @@ Then the analysis can be run in two ways:
     docker run --rm -v $(pwd):/project -w /project andymucyo/rnaseq_r:1.0 Rscript scripts/R_scripts/DES_data_analysis.R
     ```
 
-- outputs will be found in `RNAseq_project/results/R_plots` and `RNAseq_project/results/tables` 
+##### Outputs
+
+**Tables** (`results/tables/`):
+- `DEG_*.csv`: Complete differential expression results for each comparison
+- `DEG_summary.csv`: Summary of total DEGs, upregulated, and downregulated genes
+- `*_GO_complete.csv`: Full GO enrichment results
+- `*_GO_top15.csv`: Top 15 enriched GO terms
+
+**Plots** (`results/R_plots/`):
+- `PCAplot.png`: Principal component analysis
+- `heatmap_*.png`: Expression heatmaps for each comparison
+- `volcano_plot_*.png`: Volcano plots for each comparison
+- `dotplot_enrichGO_*.png`: GO enrichment visualization
+- `heatmap_B11_module.png`: B11 interferon module expression
+- `heatmap_B14_module.png`: B14 interferon module expression
+
