@@ -4,7 +4,7 @@ This project analyzes RNA-seq data from mouse blood samples infected with Toxopl
 
 ## PART 1.
 
-This part has been conducted on the IBU cluster, where data have been retrieved from and all the following scripts have been run, to asses reads quality, map them to the reference genome and count the reads obtain to produce the inputs for the Differential expression analysis in R.
+This part has been conducted on the University's HPC cluster, where data have been retrieved from and all the following scripts have been run, to asses reads quality, map them to the reference genome and count the reads obtain to produce the inputs for the Differential expression analysis in R.
 
 
 | Tool | Description | Documentation |
@@ -16,9 +16,10 @@ This part has been conducted on the IBU cluster, where data have been retrieved 
 | featureCounts | Read quantification at gene level | [featureCounts Documentation](https://subread.sourceforge.net/) |
 
 
-The data used for this project were retireved from the following repository on the IBU cluster 
+The data used for this project were retireved from the following repository on the University's HPC cluster 
     
     /data/courses/rnaseq_course/toxoplasma_de/reads_Blood
+
 But can also be fond on the Gene Expression Omnibus, with the accession number GSE119855 ([GEO link](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE119855)) 
 ### 1) Quality Check of the data
 
@@ -67,9 +68,9 @@ Finally run
     ./scripts/alignment/samtools.sh
 
 that will run the `samtools.slurm` on the .sam files. This scripts consits of three actions 
-- 1) conversion of .sam file, to .bam file (compresssed form containing the informations)
-- 2) sorting the .bam files 
-- 3) indexing the sorted .bam files
+-  conversion of .sam file, to .bam file (compresssed form containing the informations)
+-  sorting the .bam files 
+-  indexing the sorted .bam files
 
 ### 3) Read counting
 
@@ -79,8 +80,11 @@ run the following script on the sorted bam files:
 
 ## PART 2.
 
-This part is conducted on your local machine, for that you'll need to clone this repo 
+This part is conducted on your local machine 
 
+Note: each command can be run from the project root directory (`RNAseq_project`)
+
+- First you'll need to clone this repo 
 ```{bash}
 git clone https://github.com/andymucyo-ops/RNAseq_project
 ```
@@ -89,6 +93,13 @@ git clone https://github.com/andymucyo-ops/RNAseq_project
 
 - Other requirments are either Mamba (installed using miniforge or miniconda) or Docker, installed on your local machine
 
+- Finally before running the Differential expression analysis you'll need to import the Read counting output file (`counts.txt`) in the `./data/` directory
+
+- The sample info file can be generated form the [data info README file](./data/reads_Blood/), with the command
+
+```{bash}
+tail -n +11 ./data/reads_Blood/data_info_README > ./data/sample_info.txt
+```
 ### 4) Differential expression analysis 
 
 - first clone the repo on your local machine in a repo of your choice 
