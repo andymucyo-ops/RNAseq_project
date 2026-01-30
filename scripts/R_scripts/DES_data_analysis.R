@@ -1,14 +1,15 @@
 #load libraries
 
-library("DESeq2", quietly = TRUE)
-library("clusterProfiler", quietly = TRUE)
-library("pheatmap", quietly = TRUE)
-library("ggplot2", quietly = TRUE)
-library("ggrepel", quietly = TRUE)
-library("EnhancedVolcano", quietly = TRUE)
-library("org.Mm.eg.db", quietly = TRUE)
-library("enrichplot", quietly = TRUE)
+library("DESeq2", quietly = TRUE, verbose = FALSE)
+library("clusterProfiler", quietly = TRUE, verbose = FALSE)
+library("pheatmap", quietly = TRUE, verbose = FALSE)
+library("ggplot2", quietly = TRUE, verbose = FALSE)
+library("ggrepel", quietly = TRUE, verbose = FALSE)
+library("EnhancedVolcano", quietly = TRUE, verbose = FALSE)
+library("org.Mm.eg.db", quietly = TRUE, verbose = FALSE)
+library("enrichplot", quietly = TRUE, verbose = FALSE)
 
+message("libraries loaded")
 
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
@@ -26,8 +27,6 @@ rownames(counts) <- counts$Geneid
 
 #remove Geneid column
 counts$Geneid <- NULL
-head(counts)
-
 
 # Create a sample_info data frame containing the Data information according to README in reads_Blood, acting as the metadata of the counts
 
@@ -43,7 +42,6 @@ rownames(sample_info) <- sample_info$Sample
 
 #remove sample column
 sample_info$Sample <- NULL
-head(sample_info)
 
 # change Group data type to fit requirement for DESeq analysis
 sample_info$Group <- as.factor(sample_info$Group)
@@ -112,12 +110,6 @@ res_WT <- results(
   alpha = 0.05
 )
 
-write.csv(
-  as.data.frame(res_WT[order(res_WT$padj), ]),
-  file = "./results/tables/DEG_WT_CaseVsControl.csv",
-  row.names = TRUE
-)
-
 # highlight of the difference of expression between case and control condition in DKO genotype
 res_DKO <- results(
   dds,
@@ -127,12 +119,6 @@ res_DKO <- results(
     "Blood_DKO_Control"
   ),
   alpha = 0.05
-)
-
-write.csv(
-  as.data.frame(res_DKO[order(res_DKO$padj), ]),
-  file = "./results/tables/DEG_DKO_CaseVsControl.csv",
-  row.names = TRUE
 )
 
 # highlight the difference of expression in control condition between WT and DKO in Case condition
@@ -146,12 +132,6 @@ res_DKOvsWT_case <- results(
   alpha = 0.05
 )
 
-write.csv(
-  as.data.frame(res_DKOvsWT_case[order(res_DKOvsWT_case$padj), ]),
-  file = "./results/tables/DEG_DKOvsWT_case.csv",
-  row.names = TRUE
-)
-
 # highlight the difference of expression in control condition between WT and DKO in control condition
 res_DKOvsWT_control <- results(
   dds,
@@ -163,11 +143,23 @@ res_DKOvsWT_control <- results(
   alpha = 0.05
 )
 
-write.csv(
-  as.data.frame(res_DKOvsWT_control[order(res_DKOvsWT_control$padj), ]),
-  file = "./results/tables/DEG_DKOvsWT_control.csv",
-  row.names = TRUE
-)
+# save all results file as CSV files fith the following function
+res_to_csv <- function(res, res_name) {
+  write.csv(
+    as.data.frame(res[order(res$padj), ]),
+    file = paste0("./results/tables/DEG_", res_name, ".csv"),
+    row.names = TRUE
+  )
+}
+
+message("Saving DESeq results tables...")
+
+res_to_csv(res_WT, "WT_CaseVsControl")
+res_to_csv(res_DKO, "DKO_CaseVsControl")
+res_to_csv(res_DKOvsWT_case, "DKOvsWT_Case")
+res_to_csv(res_DKOvsWT_control, "DKO_CaseVsControl")
+
+message("All DESeq results tables are saved in ./results/tables/ directory")
 
 # store summary of differentialy expressed genes for each result method
 summary(res_WT)
@@ -175,6 +167,7 @@ summary(res_DKO)
 summary(res_DKOvsWT_control)
 summary(res_DKOvsWT_case)
 
+message("Generating DEGs summary table...")
 deg_summary <- data.frame(
   Comparison = c(
     "WT_CaseVsControl",
@@ -227,9 +220,19 @@ deg_summary <- data.frame(
 )
 write.csv(deg_summary, "./results/tables/DEG_summary.csv", row.names = FALSE)
 
+print("DEG summary table has been saved to ./results/tables/ directory")
 
 #Create function to retrieve top 50 genes for each result sets
-get_top_genes <- function(res, padj_cutoff = 0.05, lfc_cutoff = 1, n = 50) {
+get_top_genes <- function(
+  res,
+  res_name,
+  padj_cutoff = 0.05,
+  lfc_cutoff = 1,
+  n = 50
+) {
+  message(
+    paste("extracting top", n, "genes from:", res_name, "...")
+  )
   #set filtering criteria for the results with padj is defined and above 0.05(or other set padj value) and absolute value of lfc above set lfc cutoff
   filtering_criteria <- which(
     !is.na(res$padj) &
@@ -245,19 +248,28 @@ get_top_genes <- function(res, padj_cutoff = 0.05, lfc_cutoff = 1, n = 50) {
   top50_genes <- sig_genes[1:n]
 
   return(top50_genes)
+  message(
+    paste("top ", n, "genes of:", res_name, "Extracted")
+  )
 }
 
 
 #-----------------------------------------------------------------------
 #get to 50 genes for each comparison
 #-----------------------------------------------------------------------
-top_genes_WT <- get_top_genes(res_WT)
+top_genes_WT <- get_top_genes(res_WT, "WT condition comparison")
 
-top_genes_DKO <- get_top_genes(res_DKO)
+top_genes_DKO <- get_top_genes(res_DKO, "DKO condition comparison")
 
-top_genes_DKOvsWT_case <- get_top_genes(res_DKOvsWT_case)
+top_genes_DKOvsWT_case <- get_top_genes(
+  res_DKOvsWT_case,
+  "Case genotype comparison"
+)
 
-top_genes_DKOvsWT_control <- get_top_genes(res_DKOvsWT_control)
+top_genes_DKOvsWT_control <- get_top_genes(
+  res_DKOvsWT_control,
+  "Control genotype comparison"
+)
 
 # extract the corrected count matrix matching the top 50 genes for each results highlight
 mat_WT <- assay(vsd)[top_genes_WT, ]
@@ -268,6 +280,8 @@ mat_DKOvsWT_control <- assay(vsd)[top_genes_DKOvsWT_control, ]
 #---------------------------------------------------------------------
 # heatmap for different highlighted result data frame
 #---------------------------------------------------------------------
+message("Generating heatmaps of the results...")
+
 pheatmap(
   mat_WT,
   scale = "row",
@@ -283,6 +297,7 @@ pheatmap(
   fontsize_row = 8,
   filename = "./results/R_plots/heatmap_WT.png"
 )
+message("1/4")
 
 pheatmap(
   mat_DKO,
@@ -299,6 +314,7 @@ pheatmap(
   fontsize_row = 8,
   filename = "./results/R_plots/heatmap_DKO.png"
 )
+message("2/4")
 
 pheatmap(
   mat_DKOvsWT_case,
@@ -315,6 +331,7 @@ pheatmap(
   fontsize_row = 8,
   filename = "./results/R_plots/heatmap_DKOvsWT_case.png"
 )
+message("3/4")
 
 pheatmap(
   mat_DKOvsWT_control,
@@ -331,11 +348,14 @@ pheatmap(
   fontsize_row = 8,
   filename = "./results/R_plots/heatmap_DKOvsWT_control.png"
 )
+message("4/4")
 
+message("4 Heatmaps generated, saved to ./results/R_plots/ directory")
 #-----------------------------------------------------------------------
 # volcano plot for each result set and save them as png files
 #-----------------------------------------------------------------------
 
+message("Generating Volcano plots ...")
 # Case vs Control condition comparison in WT genotype
 png(
   filename = "./results/R_plots/volcano_plot_WT.png",
@@ -354,6 +374,7 @@ EnhancedVolcano(
 )
 
 dev.off()
+message("1/4")
 
 # Case vs Control condition comparicon in DKO Genotype
 png(
@@ -373,6 +394,7 @@ EnhancedVolcano(
 )
 
 dev.off()
+message("2/4")
 
 # DKO vs WT genotype comparison in Case condition
 png(
@@ -392,6 +414,7 @@ EnhancedVolcano(
 )
 
 dev.off()
+message("3/4")
 
 # DKO vs WT genotype comparison in Control condition
 png(
@@ -411,7 +434,9 @@ EnhancedVolcano(
 )
 
 dev.off()
+message("4/4")
 
+message("4 Volcano plots generated, saved to ./results/R_plots/ directory")
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 # 4) enrichGO analysis
@@ -459,6 +484,7 @@ universe_DKOvsWT_control <- rownames(res_DKOvsWT_control)[which(
 
 # create enrichGO (ego) object for each result
 
+message("Gene Ontology analysis ...")
 ego_WT <- enrichGO(
   gene = gene_list_WT,
   universe = universe_WT,
@@ -467,7 +493,7 @@ ego_WT <- enrichGO(
   keyType = "ENSEMBL",
   readable = TRUE
 )
-
+message("Finished WT Case vs control GO analysis 1/4")
 
 ego_DKO <- enrichGO(
   gene = gene_list_DKO,
@@ -477,7 +503,7 @@ ego_DKO <- enrichGO(
   keyType = "ENSEMBL",
   readable = TRUE
 )
-
+message("Finished DKO Case vs control GO analysis 2/4")
 
 ego_DKOvsWT_case <- enrichGO(
   gene = gene_list_DKOvsWT_case,
@@ -487,7 +513,7 @@ ego_DKOvsWT_case <- enrichGO(
   keyType = "ENSEMBL",
   readable = TRUE
 )
-
+message("Finished Case DKO vs WT GO analysis 3/4")
 
 ego_DKOvsWT_control <- enrichGO(
   gene = gene_list_DKOvsWT_control,
@@ -497,7 +523,7 @@ ego_DKOvsWT_control <- enrichGO(
   keyType = "ENSEMBL",
   readable = TRUE
 )
-
+message("Finished Control DKO vs WT GO analysis 4/4")
 #-----------------------------------------------------------------------
 # save GO Enrichment results
 #-----------------------------------------------------------------------
@@ -508,6 +534,11 @@ save_go_results <- function(ego_obj, filename_prefix, top_n = 15) {
   go_df <- as.data.frame(ego_obj)
 
   #complete GO results file
+  message(paste(
+    "Saving",
+    filename_prefix,
+    "complete GO table to ./results/tables/ directory..."
+  ))
   write.csv(
     go_df,
     file = paste0(
@@ -519,6 +550,13 @@ save_go_results <- function(ego_obj, filename_prefix, top_n = 15) {
   )
 
   #top n results
+  message(paste(
+    "Saving",
+    filename_prefix,
+    "top",
+    top_n,
+    "GO table to ./results/tables/ directory..."
+  ))
   top_go <- head(go_df, top_n)
   write.csv(
     top_go,
@@ -545,6 +583,7 @@ save_go_results(ego_DKOvsWT_control, "DKOvsWT_Control")
 # EnrichGO's dot plots
 #-----------------------------------------------------------------------
 
+message("Generating GO dotplots...")
 # WT case vs control comparison bar plot
 png(
   "./results/R_plots/dotplot_enrichGO_WT.png",
@@ -555,6 +594,7 @@ png(
 dotplot(ego_WT, showCategory = 10) +
   ggtitle("GO Enrichment - WT: Case vs Control")
 dev.off()
+message("1/4")
 
 # DKO case vs control comparison bar plot
 png(
@@ -566,6 +606,7 @@ png(
 dotplot(ego_DKO, showCategory = 10) +
   ggtitle("GO Enrichment - DKO: Case vs Control")
 dev.off()
+message("2/4")
 
 # Case DKO vs WT comparison bar plot
 png(
@@ -577,6 +618,7 @@ png(
 dotplot(ego_DKOvsWT_case, showCategory = 10) +
   ggtitle("GO Enrichment - Case: DKO vs WT")
 dev.off()
+message("3/4")
 
 # Control DKO vs WT comparison bar plot
 png(
@@ -588,8 +630,9 @@ png(
 dotplot(ego_DKOvsWT_control, showCategory = 10) +
   ggtitle("GO Enrichment - Control: DKO vs WT")
 dev.off()
+message("4/4")
 
-
+message("4 dotplots saved to ./results/R_plots/ directory")
 #------------------------------------------------------------------------
 # IFN Module gene lists (Singhania et al.)
 #------------------------------------------------------------------------
@@ -648,6 +691,7 @@ symbols_B14 <- c(
 # Convert gene symbols to ENSEMBL IDs
 #------------------------------------------------------------------------
 
+message("Searching for B11 and B14 module's genes in data... ")
 bitr_B11 <- bitr(
   symbols_B11,
   fromType = "SYMBOL",
@@ -699,7 +743,7 @@ rownames(vst_B14_matrix) <- symbol_lookup_B14[rownames(vst_B14_matrix)]
 #------------------------------------------------------------------------
 # Create module heatmaps
 #------------------------------------------------------------------------
-
+message("Generating heatmaps of the results...")
 # B11 module heatmap
 pheatmap(
   vst_B11_matrix,
@@ -716,6 +760,7 @@ pheatmap(
   fontsize_row = 8,
   filename = "./results/R_plots/heatmap_B11_module.png"
 )
+message("1/2")
 
 # B14 module heatmap
 pheatmap(
@@ -733,3 +778,7 @@ pheatmap(
   fontsize_row = 8,
   filename = "./results/R_plots/heatmap_B14_module.png"
 )
+message("2/2")
+
+message("2 Heatmaps generated, saved to ./results/R_plots/ directory")
+message("Analysis completed!")
