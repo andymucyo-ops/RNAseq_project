@@ -102,7 +102,7 @@ tail -n +11 ./data/reads_Blood/data_info_README > ./data/sample_info.txt
 ```
 ### 4) Differential expression analysis 
 
-- first clone the repo on your local machine in a repo of your choice 
+- first clone the repo on your local machine in the directory of your choice 
 ```{bash}
 git clone https://github.com/andymucyo-ops/RNAseq_project
 ```
