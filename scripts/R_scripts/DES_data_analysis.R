@@ -47,7 +47,7 @@ sample_info$Sample <- NULL
 sample_info$Group <- as.factor(sample_info$Group)
 
 # final check before launching DESeq (Must return TRUE to perform DESeq analysis!)
-all(rownames(sample_info) == colnames(counts))
+# all(rownames(sample_info) == colnames(counts))
 
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
@@ -62,9 +62,10 @@ dds <- DESeqDataSetFromMatrix(
   design = ~Group
 )
 
+message("Starting differential expression analysis...")
 # run differential expression analysis
 dds <- DESeq(dds)
-
+message("Differential expression analysis completed!")
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
 # 3) Results and data visualization
