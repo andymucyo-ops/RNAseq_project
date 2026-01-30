@@ -2,11 +2,11 @@
 
 # setting pathways
 
-input_dir="/data/users/ankunzimana/RNAseq_project/results/alignment/sam"
+input_dir="./results/alignment/sam"
 
-script_dir="/data/users/ankunzimana/RNAseq_project/scripts/alignment"
+script_dir="./scripts/alignment"
 
-output_dir="/data/users/ankunzimana/RNAseq_project/results/alignment/bam"
+output_dir="./results/alignment/bam"
 
 #apply samtools.slurm on every sam file 
 for sam_file in `ls -1 ${input_dir}/*.sam`; do

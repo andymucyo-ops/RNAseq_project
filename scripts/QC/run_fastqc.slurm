@@ -4,14 +4,14 @@
 #SBATCH --mem=1G
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=pibu_el8
-#SBATCH --output=/data/users/ankunzimana/RNAseq_project/logs/out/fastq_%j.out
-#SBATCH --error=/data/users/ankunzimana/RNAseq_project/logs/err/fastq_%j.err
+#SBATCH --output=./logs/out/fastq_%j.out
+#SBATCH --error=./logs/err/fastq_%j.err
 #SBATCH --time=02:10:00
 
 #set paths
 CONTAINER="/containers/apptainer/fastqc-0.12.1.sif" 
-INPUT_DIR="/data/users/ankunzimana/RNAseq_project/data/reads_Blood"
-OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/QC_data"
+INPUT_DIR="./data/reads_Blood"
+OUTPUT_DIR="./results/QC_data"
 
 # Run FastQC using Apptainer container
 apptainer exec ${CONTAINER} fastqc \

@@ -4,10 +4,10 @@
 #SBATCH --mem=32G
 #SBATCH --cpus-per-task=6
 #SBATCH --partition=pibu_el8
-#SBATCH --output=/data/users/ankunzimana/RNAseq_project/logs/out/samtools_%j.out
-#SBATCH --error=/data/users/ankunzimana/RNAseq_project/logs/err/samtools_%j.err
+#SBATCH --output=./logs/out/samtools_%j.out
+#SBATCH --error=./logs/err/samtools_%j.err
 #SBATCH --time=02:00:00
-#SBATCH --mail-user=andy.nkunzimana@students.unibe.ch
+#SBATCH --mail-user= <your email>
 #SBATCH --mail-type=end,fail
 
 

@@ -4,19 +4,19 @@
 #SBATCH --mem=8G
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=pibu_el8
-#SBATCH --output=/data/users/ankunzimana/RNAseq_project/logs/out/Hisat2_align_%j.out
-#SBATCH --error=/data/users/ankunzimana/RNAseq_project/logs/err/Hisat2_align_%j.err
+#SBATCH --output=./logs/out/Hisat2_align_%j.out
+#SBATCH --error=./logs/err/Hisat2_align_%j.err
 #SBATCH --time=01:00:00
-#SBATCH --mail-user=andy.nkunzimana@students.unibe.ch
+#SBATCH --mail-user= <your email>
 #SBATCH --mail-type=end,fail
 
 #set paths
 CONTAINER="/containers/apptainer/hisat2_samtools_408dfd02f175cd88.sif"
-INDEX_BASENAME="/data/users/ankunzimana/RNAseq_project/results/hisat2_indexes/index"
+INDEX_BASENAME="./results/hisat2_indexes/index"
 FILE_1=${1}
 FILE_2=${2}
 SAMPLE_NAME=${3}
-OUTPUT_DIR="/data/users/ankunzimana/RNAseq_project/results/alignment/sam"
+OUTPUT_DIR="./results/alignment/sam"
 
 # mapping script 
 

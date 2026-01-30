@@ -4,19 +4,17 @@
 #SBATCH --mem=1G
 #SBATCH --cpus-per-task=4
 #SBATCH --partition=pibu_el8
-#SBATCH --output=/data/users/ankunzimana/RNAseq_project/logs/out/counts_%j.out
-#SBATCH --error=/data/users/ankunzimana/RNAseq_project/logs/err/counts_%j.err
+#SBATCH --output=./logs/out/counts_%j.out
+#SBATCH --error=./logs/err/counts_%j.err
 #SBATCH --time=02:00:00
-#SBATCH --mail-user=andy.nkunzimana@students.unibe.ch
+#SBATCH --mail-user= <your email>
 #SBATCH --mail-type=end,fail
 
 #set work directories
-input_files="/data/users/ankunzimana/RNAseq_project/results/alignment/bam/*sorted.bam"
-annotation_file="/data/users/ankunzimana/RNAseq_project/data/reference_genome/Mus_musculus.GRCm39.115.gtf"
+input_files="./results/alignment/bam/*sorted.bam"
+annotation_file="./data/reference_genome/Mus_musculus.GRCm39.115.gtf"
 container="/containers/apptainer/subread_2.0.6.sif"
-output_dir="/data/users/ankunzimana/RNAseq_project/results/count_reads.txt"
-
-echo "${input_dir}"
+output_dir="./results/count_reads.txt"
 
 apptainer exec ${container} featureCounts -p --countReadPairs\
     -a ${annotation_file}\
