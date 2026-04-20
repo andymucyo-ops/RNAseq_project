@@ -14,4 +14,3 @@ dependencies:
   - r-ggrepel
   - cairo
   - fonts-conda-forge
-prefix: /Users/mucyo/opt/miniconda3/envs/rnaseq-r
